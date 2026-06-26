@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background-color: #020617;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove number input spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] { -moz-appearance: textfield; }
+
+/* Date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.4);
+}
+
+/* Safe area for iPhone bottom bar */
+.pb-safe {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* RTL: margin-start / margin-end via logical properties */
+[dir="rtl"] .ms-auto { margin-right: auto; margin-left: 0; }
+[dir="ltr"] .ms-auto { margin-left: auto; margin-right: 0; }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
