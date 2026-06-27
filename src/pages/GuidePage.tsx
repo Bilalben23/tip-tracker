@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import type { Transition, Variants } from 'framer-motion';
 import { useLang } from '../contexts/LanguageContext';
 
 interface Props { onBack: () => void }
@@ -25,7 +26,7 @@ function Character({
     : animateY
     ? { y: [0, -6, 0] }
     : {};
-  const transition = cookSway
+  const transition: Transition = cookSway
     ? { duration: 1, repeat: Infinity, ease: 'easeInOut', delay }
     : { duration: 2, repeat: Infinity, ease: 'easeInOut', delay };
 
@@ -70,11 +71,11 @@ function Server({ name, direction }: { name: string; direction: 1 | -1 }) {
 
 // ── main floor component ────────────────────────────────────────────────────
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   show:   { transition: { staggerChildren: 0.12 } },
 };
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 14 },
   show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 260, damping: 22 } },
 };
