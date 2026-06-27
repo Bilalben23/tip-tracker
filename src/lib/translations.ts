@@ -51,6 +51,12 @@ export interface T {
     saveBonus: string;
     editBonus: string;
     bonusHint: string;
+    add: string;
+    tipsTrend: string;
+    avg: string;
+    perDay: string;
+    workedNoTips: string;
+    dayLabel: string;
   };
 
   log: {
@@ -115,6 +121,16 @@ export interface T {
     subtitle: string;
     back: string;
     steps: Array<{ icon: string; title: string; text: string }>;
+    floor: {
+      teamTitle: string;
+      tapHint: string;
+      inside: string;
+      outside: string;
+      altShifts: string;
+      altDays: string;
+      always: string;
+      owner: string;
+    };
   };
 }
 
@@ -170,6 +186,12 @@ export const translations: Record<Language, T> = {
       saveBonus: 'Save Bonus',
       editBonus: 'Edit',
       bonusHint: 'Bonus given at end of month by management',
+      add: 'Add',
+      tipsTrend: 'Tips trend',
+      avg: 'avg',
+      perDay: '/day',
+      workedNoTips: 'Worked · no tips',
+      dayLabel: 'Day',
     },
 
     log: {
@@ -233,6 +255,16 @@ export const translations: Record<Language, T> = {
       title: 'User Guide',
       subtitle: 'How to use TipTracker',
       back: 'Back',
+      floor: {
+        teamTitle: 'Restaurant Team',
+        tapHint: 'Tap any character · live floor view',
+        inside: 'Inside',
+        outside: 'Outside — Servers',
+        altShifts: 'alt. = alternating shifts',
+        altDays: 'alt. days',
+        always: 'always',
+        owner: 'owner',
+      },
       steps: [
         {
           icon: '👋',
@@ -314,6 +346,12 @@ export const translations: Record<Language, T> = {
       saveBonus: 'Enregistrer la prime',
       editBonus: 'Modifier',
       bonusHint: 'Prime accordée en fin de mois par la direction',
+      add: 'Ajouter',
+      tipsTrend: 'Évolution des pourboires',
+      avg: 'moy.',
+      perDay: '/jour',
+      workedNoTips: 'Travaillé · sans pourboire',
+      dayLabel: 'Jour',
     },
 
     log: {
@@ -377,6 +415,16 @@ export const translations: Record<Language, T> = {
       title: 'Guide utilisateur',
       subtitle: 'Comment utiliser TipTracker',
       back: 'Retour',
+      floor: {
+        teamTitle: 'Équipe du restaurant',
+        tapHint: 'Touchez un personnage · vue en direct',
+        inside: 'Intérieur',
+        outside: 'Extérieur — Serveurs',
+        altShifts: 'alt. = jours alternés',
+        altDays: 'j. alternés',
+        always: 'toujours',
+        owner: 'patron',
+      },
       steps: [
         {
           icon: '👋',
@@ -458,6 +506,12 @@ export const translations: Record<Language, T> = {
       saveBonus: 'حفظ المكافأة',
       editBonus: 'تعديل',
       bonusHint: 'مكافأة تُمنح في نهاية الشهر من الإدارة',
+      add: 'إضافة',
+      tipsTrend: 'تطور البقشيش',
+      avg: 'متوسط',
+      perDay: '/ يوم',
+      workedNoTips: 'عمل · بدون بقشيش',
+      dayLabel: 'يوم',
     },
 
     log: {
@@ -521,6 +575,16 @@ export const translations: Record<Language, T> = {
       title: 'دليل الاستخدام',
       subtitle: 'كيفية استخدام تتبع البقشيش',
       back: 'رجوع',
+      floor: {
+        teamTitle: 'فريق المطعم',
+        tapHint: 'اضغط على أي شخصية · عرض مباشر',
+        inside: 'داخل',
+        outside: 'خارج — النادلون',
+        altShifts: 'أيام بالتناوب',
+        altDays: 'متناوب',
+        always: 'دائماً',
+        owner: 'صاحب',
+      },
       steps: [
         {
           icon: '👋',

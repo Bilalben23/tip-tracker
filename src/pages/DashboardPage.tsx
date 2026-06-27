@@ -171,7 +171,7 @@ export function DashboardPage({ onNavigate }: Props) {
             {!editingBonus && (
               <button onClick={openBonusEdit}
                 className="flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs font-medium transition-colors py-1 px-2">
-                {monthBonus ? <><Pencil size={13} /> {t.dash.editBonus}</> : <><Plus size={13} /> Add</>}
+                {monthBonus ? <><Pencil size={13} /> {t.dash.editBonus}</> : <><Plus size={13} /> {t.dash.add}</>}
               </button>
             )}
           </div>

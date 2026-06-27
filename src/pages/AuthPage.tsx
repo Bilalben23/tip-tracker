@@ -33,7 +33,7 @@ export function AuthPage() {
     e.preventDefault();
     setError('');
     const err = login(username.trim(), password);
-    if (err) setError(t.auth.errInvalid);
+    if (err) setError(t.auth[err as keyof typeof t.auth] as string ?? err);
   };
 
   const handleRegister = (e: SubmitEvent) => {
@@ -41,12 +41,7 @@ export function AuthPage() {
     setError('');
     if (password !== confirmPassword) { setError(t.auth.errMismatch); return; }
     const err = register(username.trim(), password, parseFloat(salary) || 0, currency);
-    if (err) {
-      if (err.includes('taken')) setError(t.auth.errTaken);
-      else if (err.includes('2 char')) setError(t.auth.errUsernameShort);
-      else if (err.includes('4 char')) setError(t.auth.errPasswordShort);
-      else setError(err);
-    }
+    if (err) setError(t.auth[err as keyof typeof t.auth] as string ?? err);
   };
 
   return (

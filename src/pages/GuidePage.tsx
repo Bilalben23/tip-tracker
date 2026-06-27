@@ -81,6 +81,8 @@ const fadeUp: Variants = {
 };
 
 function RestaurantFloor() {
+  const { t } = useLang();
+  const f = t.guide.floor;
   return (
     <motion.div
       className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden"
@@ -98,8 +100,8 @@ function RestaurantFloor() {
           🏠
         </motion.span>
         <div>
-          <h3 className="text-white font-black text-base leading-tight">Restaurant Team</h3>
-          <p className="text-slate-500 text-[10px]">Tap any character · live floor view</p>
+          <h3 className="text-white font-black text-base leading-tight">{f.teamTitle}</h3>
+          <p className="text-slate-500 text-[10px]">{f.tapHint}</p>
         </div>
       </div>
 
@@ -111,7 +113,7 @@ function RestaurantFloor() {
           variants={stagger} initial="hidden" animate="show"
         >
           <div className="px-3 py-1 bg-slate-800 border-b border-slate-700">
-            <span className="text-slate-400 text-[9px] font-black uppercase tracking-widest">Inside</span>
+            <span className="text-slate-400 text-[9px] font-black uppercase tracking-widest">{f.inside}</span>
           </div>
 
           <div className="grid grid-cols-2 divide-x divide-slate-700/50">
@@ -123,7 +125,7 @@ function RestaurantFloor() {
                 <span className="text-red-400 text-[9px] font-black uppercase tracking-wide">Cuisine</span>
               </div>
               <div className="flex flex-col gap-2.5">
-                <Character emoji="👩‍🍳" name="Kristina" sub="owner"
+                <Character emoji="👩‍🍳" name="Kristina" sub={f.owner}
                   nameColor="text-purple-300" subColor="text-purple-600"
                   cookSway delay={0} />
                 <Character emoji="👤" name="Yassin" animateY delay={0.4} />
@@ -141,12 +143,12 @@ function RestaurantFloor() {
                   <span className="text-amber-400 text-[9px] font-black uppercase tracking-wide">Bar</span>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Character emoji="⭐" name="Bilal"   sub="alt. days"
+                  <Character emoji="⭐" name="Bilal"   sub={f.altDays}
                     nameColor="text-amber-400" subColor="text-amber-700"
                     animateY delay={0} />
-                  <Character emoji="👤" name="Azhar"   sub="alt. days"
+                  <Character emoji="👤" name="Azhar"   sub={f.altDays}
                     subColor="text-slate-600" animateY delay={0.5} />
-                  <Character emoji="👤" name="Youssef" sub="always"
+                  <Character emoji="👤" name="Youssef" sub={f.always}
                     subColor="text-slate-600" animateY delay={1.0} />
                 </div>
               </motion.div>
@@ -162,7 +164,7 @@ function RestaurantFloor() {
                   <span className="text-sm">💰</span>
                   <span className="text-green-400 text-[9px] font-black uppercase tracking-wide">La Caisse</span>
                 </div>
-                <Character emoji="👨‍💼" name="Bernard" sub="owner"
+                <Character emoji="👨‍💼" name="Bernard" sub={f.owner}
                   nameColor="text-green-300" subColor="text-green-600"
                   animateY delay={0} />
               </motion.div>
@@ -177,7 +179,7 @@ function RestaurantFloor() {
           transition={{ delay: 0.3, type: 'spring', stiffness: 200, damping: 24 }}
         >
           <div className="px-3 py-1 bg-sky-950/30 border-b border-sky-900/30">
-            <span className="text-sky-400 text-[9px] font-black uppercase tracking-widest">Outside — Servers</span>
+            <span className="text-sky-400 text-[9px] font-black uppercase tracking-widest">{f.outside}</span>
           </div>
           <div className="relative h-20 flex items-center justify-around px-8 overflow-hidden">
             {/* dashed path */}
@@ -193,7 +195,7 @@ function RestaurantFloor() {
       <div className="px-5 py-2.5 border-t border-slate-800 flex flex-wrap items-center gap-3">
         <span className="text-[10px] text-amber-400">⭐ = you (Bilal)</span>
         <span className="text-slate-700">·</span>
-        <span className="text-[10px] text-slate-500">alt. = alternating shifts</span>
+        <span className="text-[10px] text-slate-500">{f.altShifts}</span>
       </div>
     </motion.div>
   );

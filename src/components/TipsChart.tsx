@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { TrendingUp } from 'lucide-react';
+import { useLang } from '../contexts/LanguageContext';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine,
@@ -26,6 +27,7 @@ interface ChartPoint {
 }
 
 export function TipsChart({ yearMonth, entries, currency, onDayClick }: Props) {
+  const { t } = useLang();
   const monthDate = parseISO(yearMonth + '-01');
   const days = eachDayOfInterval({ start: startOfMonth(monthDate), end: endOfMonth(monthDate) });
 
@@ -58,11 +60,11 @@ export function TipsChart({ yearMonth, entries, currency, onDayClick }: Props) {
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <TrendingUp size={15} className="text-amber-400" />
-          <p className="text-slate-300 text-sm font-semibold">Tips trend</p>
+          <p className="text-slate-300 text-sm font-semibold">{t.dash.tipsTrend}</p>
         </div>
         {avg > 0 && (
           <span className="text-[11px] text-slate-500">
-            avg <span className="text-amber-400 font-bold">{currency}{avg.toFixed(0)}</span>/day
+            {t.dash.avg} <span className="text-amber-400 font-bold">{currency}{avg.toFixed(0)}</span>{t.dash.perDay}
           </span>
         )}
       </div>
@@ -112,7 +114,7 @@ export function TipsChart({ yearMonth, entries, currency, onDayClick }: Props) {
             />
           )}
           <Tooltip
-            content={<CustomTooltip currency={currency} />}
+            content={<CustomTooltip currency={currency} t={t.dash} />}
             cursor={{ stroke: '#f59e0b', strokeWidth: 1, strokeOpacity: 0.4 }}
           />
           <Area
@@ -138,22 +140,23 @@ interface TooltipInner {
   active?: boolean;
   payload?: Array<{ payload: ChartPoint }>;
   currency: string;
+  t: { dayLabel: string; workedNoTips: string; dayOff: string };
 }
 
-function CustomTooltip({ active, payload, currency }: TooltipInner) {
+function CustomTooltip({ active, payload, currency, t }: TooltipInner) {
   if (!active || !payload?.length) return null;
   const pt = payload[0].payload;
   const tips = pt.tips;
 
   return (
     <div className="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 shadow-xl text-xs">
-      <p className="text-slate-400 font-medium mb-0.5">Day {pt.day}</p>
+      <p className="text-slate-400 font-medium mb-0.5">{t.dayLabel} {pt.day}</p>
       {tips !== null && tips > 0 ? (
         <p className="text-amber-400 font-black text-sm">{currency} {tips.toFixed(2)}</p>
       ) : pt.worked ? (
-        <p className="text-emerald-400 font-semibold">Worked · no tips</p>
+        <p className="text-emerald-400 font-semibold">{t.workedNoTips}</p>
       ) : (
-        <p className="text-slate-500">Day off</p>
+        <p className="text-slate-500">{t.dayOff}</p>
       )}
     </div>
   );

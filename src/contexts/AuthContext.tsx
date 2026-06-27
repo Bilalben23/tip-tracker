@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const found = storage.getUsers().find(
       u => u.username.toLowerCase() === username.toLowerCase() && u.password === password
     );
-    if (!found) return 'Invalid username or password';
+    if (!found) return 'errInvalid';
     setUser(found);
     storage.setCurrentUserId(found.id);
     return null;
@@ -36,11 +36,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = useCallback((
     username: string, password: string, salary: number, currency: string
   ): string | null => {
-    if (username.trim().length < 2) return 'Username must be at least 2 characters';
-    if (password.length < 4) return 'Password must be at least 4 characters';
+    if (username.trim().length < 2) return 'errUsernameShort';
+    if (password.length < 4) return 'errPasswordShort';
     const users = storage.getUsers();
     if (users.find(u => u.username.toLowerCase() === username.toLowerCase()))
-      return 'Username already taken';
+      return 'errTaken';
     const newUser: User = {
       id: crypto.randomUUID(),
       username: username.trim(),
