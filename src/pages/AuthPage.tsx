@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { UtensilsCrossed, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
@@ -6,9 +6,9 @@ import type { Language } from '../types';
 
 const CURRENCIES = [
   { symbol: 'DH', label: 'MAD — درهم' },
-  { symbol: '€',  label: 'EUR — €' },
-  { symbol: '$',  label: 'USD — $' },
-  { symbol: '£',  label: 'GBP — £' },
+  { symbol: '€', label: 'EUR — €' },
+  { symbol: '$', label: 'USD — $' },
+  { symbol: '£', label: 'GBP — £' },
 ];
 
 const LANGS: { code: Language; flag: string; name: string }[] = [
@@ -29,14 +29,14 @@ export function AuthPage() {
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: SubmitEvent) => {
     e.preventDefault();
     setError('');
     const err = login(username.trim(), password);
     if (err) setError(t.auth.errInvalid);
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = (e: SubmitEvent) => {
     e.preventDefault();
     setError('');
     if (password !== confirmPassword) { setError(t.auth.errMismatch); return; }
@@ -57,11 +57,10 @@ export function AuthPage() {
           <button
             key={l.code}
             onClick={() => setLang(l.code)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
-              lang === l.code
-                ? 'bg-amber-500 border-amber-500 text-slate-900'
-                : 'border-slate-700 text-slate-400 hover:border-slate-500'
-            }`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${lang === l.code
+              ? 'bg-amber-500 border-amber-500 text-slate-900'
+              : 'border-slate-700 text-slate-400 hover:border-slate-500'
+              }`}
           >
             <span>{l.flag}</span>
             <span>{l.name}</span>
@@ -86,9 +85,8 @@ export function AuthPage() {
             <button
               key={tb}
               onClick={() => { setTab(tb); setError(''); }}
-              className={`flex-1 py-2.5 text-sm font-bold rounded-xl transition-all ${
-                tab === tb ? 'bg-amber-500 text-slate-900' : 'text-slate-400'
-              }`}
+              className={`flex-1 py-2.5 text-sm font-bold rounded-xl transition-all ${tab === tb ? 'bg-amber-500 text-slate-900' : 'text-slate-400'
+                }`}
             >
               {tb === 'login' ? t.auth.login : t.auth.register}
             </button>

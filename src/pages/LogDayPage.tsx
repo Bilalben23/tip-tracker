@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { format, parseISO, isToday, isFuture } from 'date-fns';
 import { CheckCircle2, XCircle, Coins, StickyNote, Trash2, Save, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -95,9 +95,8 @@ export function LogDayPage({ initialDate }: Props) {
               <p className="text-slate-600 text-xs mt-0.5">{format(parseISO(date), 'yyyy')}</p>
             </div>
             <button onClick={() => shiftDate(1)} disabled={isToday(parseISO(date))}
-              className={`p-2.5 rounded-xl transition-colors ${
-                isToday(parseISO(date)) ? 'text-slate-700' : 'text-slate-400 hover:bg-slate-800 active:bg-slate-700'
-              }`}>
+              className={`p-2.5 rounded-xl transition-colors ${isToday(parseISO(date)) ? 'text-slate-700' : 'text-slate-400 hover:bg-slate-800 active:bg-slate-700'
+                }`}>
               {NextIcon}
             </button>
           </div>
@@ -113,16 +112,14 @@ export function LogDayPage({ initialDate }: Props) {
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-4">{t.log.statusLabel}</p>
           <div className="grid grid-cols-2 gap-3">
             <button onClick={() => setWorked(true)}
-              className={`flex flex-col items-center gap-3 py-5 rounded-2xl border-2 transition-all ${
-                worked ? 'border-emerald-500 bg-emerald-900/30 text-emerald-400' : 'border-slate-700 text-slate-500'
-              }`}>
+              className={`flex flex-col items-center gap-3 py-5 rounded-2xl border-2 transition-all ${worked ? 'border-emerald-500 bg-emerald-900/30 text-emerald-400' : 'border-slate-700 text-slate-500'
+                }`}>
               <CheckCircle2 size={30} />
               <span className="text-sm font-bold">{t.log.worked}</span>
             </button>
             <button onClick={() => setWorked(false)}
-              className={`flex flex-col items-center gap-3 py-5 rounded-2xl border-2 transition-all ${
-                !worked ? 'border-red-500 bg-red-900/30 text-red-400' : 'border-slate-700 text-slate-500'
-              }`}>
+              className={`flex flex-col items-center gap-3 py-5 rounded-2xl border-2 transition-all ${!worked ? 'border-red-500 bg-red-900/30 text-red-400' : 'border-slate-700 text-slate-500'
+                }`}>
               <XCircle size={30} />
               <span className="text-sm font-bold">{t.log.dayOff}</span>
             </button>

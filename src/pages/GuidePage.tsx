@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
 
@@ -27,7 +26,7 @@ export function GuidePage({ onBack }: Props) {
 
       <div className="px-4 pt-5 space-y-4">
         {/* Hero card */}
-        <div className="bg-gradient-to-br from-amber-600 via-amber-700 to-orange-900 rounded-3xl p-6 text-center">
+        <div className="bg-linear-to-br from-amber-600 via-amber-700 to-orange-900 rounded-3xl p-6 text-center">
           <div className="text-5xl mb-3">🍽️</div>
           <h2 className="text-white text-xl font-black">{t.appName}</h2>
           <p className="text-amber-200 text-sm mt-1">{t.tagline}</p>

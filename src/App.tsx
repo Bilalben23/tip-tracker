@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthPage } from './pages/AuthPage';
@@ -26,10 +26,10 @@ function AppContent() {
   return (
     <div className="max-w-md mx-auto relative min-h-screen">
       {page === 'dashboard' && <DashboardPage onNavigate={navigate} />}
-      {page === 'log'       && <LogDayPage initialDate={logDate} key={logDate ?? 'today'} />}
-      {page === 'history'   && <HistoryPage onNavigate={navigate} />}
-      {page === 'profile'   && <ProfilePage onNavigate={navigate} />}
-      {page === 'guide'     && <GuidePage onBack={() => navigate('profile')} />}
+      {page === 'log' && <LogDayPage initialDate={logDate} key={logDate ?? 'today'} />}
+      {page === 'history' && <HistoryPage onNavigate={navigate} />}
+      {page === 'profile' && <ProfilePage onNavigate={navigate} />}
+      {page === 'guide' && <GuidePage onBack={() => navigate('profile')} />}
       {page !== 'guide' && <BottomNav current={page} onNavigate={p => navigate(p)} />}
     </div>
   );

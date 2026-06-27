@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Briefcase, DollarSign, Lock, LogOut,
   TrendingUp, CheckCircle2, Coins, Edit3, Save, X, BookOpen, ChevronRight,
@@ -11,9 +11,9 @@ import type { Language, Page } from '../types';
 
 const CURRENCIES = [
   { symbol: 'DH', label: 'MAD — درهم' },
-  { symbol: '€',  label: 'EUR — €' },
-  { symbol: '$',  label: 'USD — $' },
-  { symbol: '£',  label: 'GBP — £' },
+  { symbol: '€', label: 'EUR — €' },
+  { symbol: '$', label: 'USD — $' },
+  { symbol: '£', label: 'GBP — £' },
 ];
 
 const LANGS: { code: Language; flag: string; name: string }[] = [
@@ -72,7 +72,7 @@ export function ProfilePage({ onNavigate }: Props) {
       <div className="px-4 pt-4 space-y-3">
         {/* Avatar */}
         <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 text-xl font-black shadow-lg shadow-amber-900/30 shrink-0">
+          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 text-xl font-black shadow-lg shadow-amber-900/30 shrink-0">
             {initials}
           </div>
           <div>
@@ -105,9 +105,8 @@ export function ProfilePage({ onNavigate }: Props) {
           <div className="flex gap-2">
             {LANGS.map(l => (
               <button key={l.code} onClick={() => setLang(l.code)}
-                className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-xl border-2 text-sm font-semibold transition-all ${
-                  lang === l.code ? 'border-amber-500 bg-amber-500/10 text-amber-400' : 'border-slate-700 text-slate-400'
-                }`}>
+                className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-xl border-2 text-sm font-semibold transition-all ${lang === l.code ? 'border-amber-500 bg-amber-500/10 text-amber-400' : 'border-slate-700 text-slate-400'
+                  }`}>
                 <span className="text-xl">{l.flag}</span>
                 <span className="text-xs">{l.name}</span>
               </button>
@@ -141,9 +140,8 @@ export function ProfilePage({ onNavigate }: Props) {
             <div className="mt-3 space-y-2">
               {CURRENCIES.map(c => (
                 <button key={c.symbol} onClick={() => { updateUser({ currency: c.symbol }); setEditingCurrency(false); }}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${
-                    user.currency === c.symbol ? 'border-amber-500 bg-amber-500/10 text-amber-400' : 'border-slate-700 text-slate-300'
-                  }`}>
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${user.currency === c.symbol ? 'border-amber-500 bg-amber-500/10 text-amber-400' : 'border-slate-700 text-slate-300'
+                    }`}>
                   <span className="font-semibold">{c.label}</span>
                   {user.currency === c.symbol && <CheckCircle2 size={16} className="text-amber-400" />}
                 </button>

@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { ar, fr, enUS } from 'date-fns/locale';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { ar, fr, enUS, type Locale } from 'date-fns/locale';
 import type { Language } from '../types';
 import { translations, type T } from '../lib/translations';
 
@@ -13,7 +13,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Language>(() => {
     return (localStorage.getItem('tt_lang') as Language) ?? 'fr';
   });

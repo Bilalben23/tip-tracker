@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { format, parseISO } from 'date-fns';
 import {
   ChevronLeft, ChevronRight, CheckCircle2, XCircle,
@@ -64,9 +64,8 @@ export function HistoryPage({ onNavigate }: Props) {
             {format(parseISO(selectedMonth + '-01'), 'MMMM yyyy', { locale: dateLocale })}
           </span>
           <button onClick={() => goMonth(1)} disabled={selectedMonth >= currentMonth}
-            className={`p-2 rounded-xl transition-colors ${
-              selectedMonth >= currentMonth ? 'text-slate-700' : 'text-slate-400 hover:bg-slate-800 active:bg-slate-700'
-            }`}>
+            className={`p-2 rounded-xl transition-colors ${selectedMonth >= currentMonth ? 'text-slate-700' : 'text-slate-400 hover:bg-slate-800 active:bg-slate-700'
+              }`}>
             {NextIcon}
           </button>
         </div>
@@ -108,9 +107,8 @@ export function HistoryPage({ onNavigate }: Props) {
                 className="w-full bg-slate-900 rounded-2xl border border-slate-800 active:border-slate-600 transition-colors text-start overflow-hidden">
                 <div className="flex items-center justify-between px-4 pt-4 pb-3">
                   <div className="flex items-center gap-3">
-                    <div className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 ${
-                      entry.worked ? 'bg-emerald-900/60 text-emerald-400' : 'bg-red-900/40 text-red-400'
-                    }`}>
+                    <div className={`w-11 h-11 rounded-full flex items-center justify-center shrink-0 ${entry.worked ? 'bg-emerald-900/60 text-emerald-400' : 'bg-red-900/40 text-red-400'
+                      }`}>
                       {entry.worked ? <CheckCircle2 size={19} /> : <XCircle size={19} />}
                     </div>
                     <div>

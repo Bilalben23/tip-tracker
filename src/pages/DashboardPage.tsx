@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
   format, parseISO, startOfMonth, endOfMonth,
   eachDayOfInterval, isToday, isFuture,
@@ -103,7 +103,7 @@ export function DashboardPage({ onNavigate }: Props) {
   return (
     <div className="min-h-screen bg-slate-950 pb-28">
       {/* Header */}
-      <div className="bg-gradient-to-br from-amber-600 via-amber-700 to-orange-900 px-5 pt-14 pb-10">
+      <div className="bg-linear-to-br from-amber-600 via-amber-700 to-orange-900 px-5 pt-14 pb-10">
         <p className="text-amber-200 text-sm font-medium">{t.dash.welcomeBack}</p>
         <h1 className="text-white text-2xl font-black mt-0.5">{user?.username} 👋</h1>
         <div className="flex items-center justify-between mt-5">
@@ -115,9 +115,8 @@ export function DashboardPage({ onNavigate }: Props) {
             {format(monthDate, 'MMMM yyyy', { locale: dateLocale })}
           </span>
           <button onClick={() => goMonth(1)} disabled={selectedMonth >= currentMonth}
-            className={`p-2 rounded-xl transition-colors ${
-              selectedMonth >= currentMonth ? 'text-amber-800' : 'text-amber-200 hover:bg-white/10 active:bg-white/20'
-            }`}>
+            className={`p-2 rounded-xl transition-colors ${selectedMonth >= currentMonth ? 'text-amber-800' : 'text-amber-200 hover:bg-white/10 active:bg-white/20'
+              }`}>
             <Chevron dir="right" />
           </button>
         </div>
@@ -256,16 +255,15 @@ export function DashboardPage({ onNavigate }: Props) {
                 <button key={entry.id} onClick={() => onNavigate('log', entry.date)}
                   className="w-full bg-slate-900 rounded-2xl border border-slate-800 p-4 flex items-center justify-between active:border-slate-600 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                      entry.worked ? 'bg-emerald-900/60 text-emerald-400' : 'bg-red-900/40 text-red-400'
-                    }`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${entry.worked ? 'bg-emerald-900/60 text-emerald-400' : 'bg-red-900/40 text-red-400'
+                      }`}>
                       {entry.worked ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
                     </div>
                     <div className="text-start">
                       <p className="text-white text-sm font-semibold">
                         {isToday(parseISO(entry.date)) ? t.dash.today : format(parseISO(entry.date), 'EEE, MMM d', { locale: dateLocale })}
                       </p>
-                      {entry.notes && <p className="text-slate-500 text-xs truncate max-w-[160px] mt-0.5">{entry.notes}</p>}
+                      {entry.notes && <p className="text-slate-500 text-xs truncate max-w-40 mt-0.5">{entry.notes}</p>}
                     </div>
                   </div>
                   <div className="text-end shrink-0">
