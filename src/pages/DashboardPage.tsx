@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
 import { entriesLib } from '../lib/entries';
 import { bonusesLib } from '../lib/bonuses';
+import { TipsChart } from '../components/TipsChart';
 import type { MonthlyBonus, Page } from '../types';
 
 interface Props {
@@ -151,6 +152,14 @@ export function DashboardPage({ onNavigate }: Props) {
           <StatChip icon={<Trophy size={18} className="text-amber-400" />}
             value={bestDay ? `${cur}${bestDay.tips.toFixed(0)}` : '—'} label={t.dash.bestDay} />
         </div>
+
+        {/* Tips chart */}
+        <TipsChart
+          yearMonth={selectedMonth}
+          entries={entries}
+          currency={cur}
+          onDayClick={date => onNavigate('log', date)}
+        />
 
         {/* Monthly Bonus */}
         <div className="bg-slate-900 rounded-2xl border border-slate-800 p-4">
