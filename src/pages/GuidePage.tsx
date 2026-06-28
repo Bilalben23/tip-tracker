@@ -98,6 +98,235 @@ function Server({ name, direction }: { name: string; direction: 1 | -1 }) {
   );
 }
 
+// ── beach scene ─────────────────────────────────────────────────────────────
+
+type BeachPhase = 'idle' | 'wave' | 'swim';
+
+interface BMember {
+  name: string; rest: string; swim: string; color: string; delay: number; fart?: boolean;
+}
+
+const BEACH: BMember[] = [
+  { name: 'Bilal',    rest: '😎', swim: '🏊',   color: 'text-amber-400',  delay: 0 },
+  { name: 'Kristina', rest: '👒', swim: '🏊‍♀️',  color: 'text-purple-300', delay: 0.12 },
+  { name: 'Yassin',   rest: '🕶️', swim: '🏊',   color: 'text-sky-300',    delay: 0.24 },
+  { name: 'Wael',     rest: '🩴', swim: '🏊',   color: 'text-slate-300',  delay: 0.36, fart: true },
+  { name: 'Azhar',    rest: '🌸', swim: '🏊',   color: 'text-pink-300',   delay: 0.48 },
+  { name: 'Youssef',  rest: '🏄', swim: '🏊',   color: 'text-cyan-300',   delay: 0.60 },
+  { name: 'Bernard',  rest: '👔', swim: '🏊‍♂️',  color: 'text-green-300',  delay: 0.72 },
+  { name: 'Omar',     rest: '🏃', swim: '🏊',   color: 'text-blue-300',   delay: 0.84 },
+  { name: 'Moad',     rest: '😴', swim: '🏊',   color: 'text-orange-300', delay: 0.96 },
+];
+
+function BeachMemberChar({ m, phase }: { m: BMember; phase: BeachPhase }) {
+  const [tip, setTip] = useState(false);
+  const isSwim = phase === 'swim';
+
+  const handleClick = () => {
+    if (!m.fart) return;
+    new Audio('/sounds/beanfrog-proud-fart.mp3').play().catch(() => {});
+    setTip(true);
+    setTimeout(() => setTip(false), 2000);
+  };
+
+  return (
+    <motion.div
+      className="relative flex flex-col items-center gap-0.5 cursor-pointer select-none"
+      onClick={handleClick}
+      animate={isSwim
+        ? { y: [-10, 4, -10], rotate: [-10, 10, -10] }
+        : { y: [0, -4, 0] }}
+      transition={{ duration: isSwim ? 0.75 : 2.5, repeat: Infinity, ease: 'easeInOut', delay: m.delay }}
+    >
+      <span className="text-xl leading-none">{isSwim ? m.swim : m.rest}</span>
+      <span className={`text-[8px] font-black leading-none ${m.color}`}>{m.name}</span>
+
+      <AnimatePresence>
+        {tip && (
+          <motion.div
+            className="absolute -top-7 whitespace-nowrap text-[10px] font-bold bg-slate-700 text-white px-2 py-0.5 rounded-lg pointer-events-none z-50"
+            initial={{ opacity: 0, y: 4, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+          >
+            {isSwim ? '💩🫧' : 'أنا الخراي 💨'}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function BeachScene() {
+  const [phase, setPhase] = useState<BeachPhase>('idle');
+
+  const triggerTsunami = () => {
+    if (phase !== 'idle') return;
+    setPhase('wave');
+    setTimeout(() => setPhase('swim'), 800);
+    setTimeout(() => setPhase('idle'), 5200);
+  };
+
+  const rows = [BEACH.slice(0, 3), BEACH.slice(3, 6), BEACH.slice(6, 9)];
+
+  const btnLabel =
+    phase === 'wave' ? '🌊 incoming...' :
+    phase === 'swim' ? '🏊 tout le monde nage!' :
+    '🌊 TSUNAMI!';
+
+  return (
+    <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
+
+      {/* Header */}
+      <div className="px-5 pt-4 pb-3 border-b border-slate-800 flex items-center gap-2">
+        <motion.span
+          className="text-xl inline-block"
+          animate={{ rotate: [-5, 5, -5] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >🏖️</motion.span>
+        <div>
+          <h3 className="text-white font-black text-base leading-tight">La Plage</h3>
+          <p className="text-slate-500 text-[10px]">after-shift beach vibes</p>
+        </div>
+      </div>
+
+      {/* Scene */}
+      <div className="relative overflow-hidden" style={{ height: 230 }}>
+
+        {/* Sky */}
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-700 via-sky-600 to-sky-500" />
+
+        {/* Clouds */}
+        <motion.div
+          className="absolute top-4 left-6 text-2xl opacity-80"
+          animate={{ x: [0, 18, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        >☁️</motion.div>
+        <motion.div
+          className="absolute top-7 left-28 text-lg opacity-60"
+          animate={{ x: [0, -14, 0] }}
+          transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        >☁️</motion.div>
+
+        {/* Sun */}
+        <motion.div
+          className="absolute top-3 right-5 text-3xl"
+          animate={phase !== 'idle'
+            ? { y: -70, opacity: 0 }
+            : { y: 0, opacity: 1, scale: [1, 1.08, 1] }}
+          transition={phase !== 'idle'
+            ? { duration: 0.35 }
+            : { duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >☀️</motion.div>
+
+        {/* Palm trees */}
+        <motion.div
+          className="absolute bottom-14 left-1 text-4xl z-10"
+          animate={{ rotate: [-4, 4, -4] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+        >🌴</motion.div>
+        <motion.div
+          className="absolute bottom-14 right-1 text-4xl z-10"
+          animate={{ rotate: [4, -4, 4] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+        >🌴</motion.div>
+
+        {/* Sand */}
+        <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-yellow-900/80 via-yellow-800/40 to-transparent" />
+
+        {/* Calm sea */}
+        <motion.div
+          className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-blue-900 to-blue-700/70"
+          animate={phase === 'idle' ? { scaleY: [1, 1.12, 1] } : { scaleY: 1 }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ transformOrigin: 'bottom' }}
+        />
+
+        {/* Team on beach */}
+        <div className="absolute inset-x-8 bottom-10 flex flex-col gap-2">
+          {rows.map((row, ri) => (
+            <div key={ri} className="flex justify-around">
+              {row.map(m => <BeachMemberChar key={m.name} m={m} phase={phase} />)}
+            </div>
+          ))}
+        </div>
+
+        {/* ── TSUNAMI WAVE ── */}
+        <AnimatePresence>
+          {phase !== 'idle' && (
+            <motion.div
+              className="absolute inset-0 flex flex-col"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '110%' }}
+              transition={{ type: 'spring', stiffness: 55, damping: 16 }}
+            >
+              {/* Crest */}
+              <div className="flex shrink-0 overflow-hidden -mb-1 relative z-10">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <motion.span
+                    key={i}
+                    className="text-3xl"
+                    animate={{ y: [0, -8, 0], scale: [1, 1.15, 1] }}
+                    transition={{ duration: 0.55, repeat: Infinity, delay: i * 0.06, ease: 'easeInOut' }}
+                  >🌊</motion.span>
+                ))}
+              </div>
+
+              {/* Water body */}
+              <div className="flex-1 bg-gradient-to-b from-blue-500/95 via-blue-600 to-blue-900 flex items-center justify-center">
+                <AnimatePresence>
+                  {phase === 'swim' && (
+                    <motion.div
+                      className="text-center px-4"
+                      initial={{ scale: 0, rotate: -15 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                    >
+                      <p className="text-white font-black text-2xl drop-shadow-lg">🌊 TSUNAMI! 🌊</p>
+                      <p className="text-blue-200 text-xs mt-1 font-bold">tout le monde à l'eau!</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Bubbles */}
+                {phase === 'swim' && Array.from({ length: 7 }).map((_, i) => (
+                  <motion.span
+                    key={i}
+                    className="absolute text-lg"
+                    style={{ left: `${10 + i * 13}%` }}
+                    initial={{ y: 80, opacity: 0 }}
+                    animate={{ y: -20, opacity: [0, 0.9, 0] }}
+                    transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: i * 0.4, ease: 'easeOut' }}
+                  >🫧</motion.span>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Button */}
+      <div className="px-4 py-3 border-t border-slate-800">
+        <motion.button
+          onClick={triggerTsunami}
+          disabled={phase !== 'idle'}
+          className={`w-full py-3 rounded-xl font-black text-sm transition-all ${
+            phase !== 'idle'
+              ? 'bg-blue-900/40 text-blue-400 cursor-not-allowed'
+              : 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-900/40'
+          }`}
+          animate={phase === 'idle' ? { scale: [1, 1.02, 1] } : {}}
+          transition={{ duration: 1.8, repeat: Infinity }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {btnLabel}
+        </motion.button>
+      </div>
+    </div>
+  );
+}
+
 // ── main floor component ────────────────────────────────────────────────────
 
 const stagger: Variants = {
@@ -259,6 +488,8 @@ export function GuidePage({ onBack }: Props) {
         </div>
 
         <RestaurantFloor />
+
+        <BeachScene />
 
         {t.guide.steps.map((step, i) => (
           <div key={i} className="bg-slate-900 rounded-2xl border border-slate-800 p-5">
