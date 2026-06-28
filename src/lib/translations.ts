@@ -22,6 +22,8 @@ export interface T {
     selectNone: string;
     saveBtn: string;
     savedMsg: string;
+    roundTitle: string;
+    each: string;
   };
 
   auth: {
@@ -184,6 +186,8 @@ export const translations: Record<Language, T> = {
       selectNone: 'None',
       saveBtn: '💾 Save as my tips today',
       savedMsg: 'Saved to today!',
+      roundTitle: 'Remove coins to split cleanly:',
+      each: 'each',
     },
 
     auth: {
@@ -370,7 +374,9 @@ export const translations: Record<Language, T> = {
       selectAll: 'Tout sélectionner',
       selectNone: 'Aucun',
       saveBtn: '💾 Enregistrer comme mes pourboires du jour',
-      savedMsg: 'Enregistré pour aujourd\'hui !',
+      savedMsg: "Enregistré pour aujourd'hui !",
+      roundTitle: 'Retirer des pièces pour partager net :',
+      each: 'chacun',
     },
 
     auth: {
@@ -558,6 +564,8 @@ export const translations: Record<Language, T> = {
       selectNone: 'لا أحد',
       saveBtn: '💾 حفظ كبقشيش اليوم',
       savedMsg: 'تم الحفظ لليوم!',
+      roundTitle: 'أزل قطعاً للقسمة بوضوح:',
+      each: 'لكل شخص',
     },
 
     auth: {

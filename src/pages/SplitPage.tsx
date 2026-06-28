@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { useLang } from '../contexts/LanguageContext';
@@ -47,6 +47,29 @@ export function SplitPage() {
   const amount = parseFloat(total) || 0;
   const share = count > 0 && amount > 0 ? amount / count : 0;
   const activeMembers = TEAM.filter(n => selected.has(n));
+
+  // Rounding suggestions — only when share has ugly cents
+  const suggestions = useMemo(() => {
+    if (count === 0 || amount <= 0 || share <= 0) return [];
+    const cents = Math.round((share % 1) * 100);
+    if (cents === 0 || cents === 50) return []; // already clean
+    const opts: { share: number; remove: number; newTotal: number }[] = [];
+    const candidates = [
+      Math.floor(share * 2) / 2,   // nearest 0.50
+      Math.floor(share),            // nearest 1.00
+      Math.floor(share / 5) * 5,   // nearest 5.00
+    ];
+    const seen = new Set<number>();
+    for (const s of candidates) {
+      if (s > 0 && !seen.has(s)) {
+        seen.add(s);
+        const newTotal = parseFloat((s * count).toFixed(2));
+        const remove  = parseFloat((amount - newTotal).toFixed(2));
+        if (remove > 0) opts.push({ share: s, remove, newTotal });
+      }
+    }
+    return opts;
+  }, [amount, count, share]);
 
   return (
     <div className={`min-h-screen bg-slate-950 pb-28 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -164,6 +187,33 @@ export function SplitPage() {
               <p className="text-slate-500 text-xs text-center mt-1">
                 {currency} · {count} {s.people}
               </p>
+
+              {/* Rounding suggestions */}
+              {suggestions.length > 0 && (
+                <div className="mt-4 bg-slate-800/70 rounded-xl p-3 border border-slate-700/50">
+                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">
+                    💡 {s.roundTitle}
+                  </p>
+                  <div className="space-y-1.5">
+                    {suggestions.map((sg, i) => (
+                      <motion.button
+                        key={i}
+                        onClick={() => setTotal(sg.newTotal.toString())}
+                        whileTap={{ scale: 0.97 }}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-slate-700/60 active:bg-slate-600 transition-colors"
+                      >
+                        <span className="text-red-400 text-sm font-bold">
+                          - {sg.remove.toFixed(2)} {currency}
+                        </span>
+                        <span className="text-slate-500 text-xs">→</span>
+                        <span className="text-green-400 text-sm font-bold tabular-nums">
+                          {sg.share.toFixed(2)} {currency} {s.each}
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Per-person list */}
               {share > 0 && (
