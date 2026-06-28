@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 
-const TEAM = ['Bilal', 'Kristina', 'Yassin', 'Wael', 'Azhar', 'Youssef', 'Bernard', 'Omar', 'Moad'];
+const TEAM = ['Bilal', 'Yassin', 'Wael', 'Azhar', 'Youssef', 'Omar', 'Moad'];
 
 export function SplitPage() {
   const { t, isRTL } = useLang();
