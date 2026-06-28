@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
 import {
   format, parseISO, startOfMonth, endOfMonth,
   eachDayOfInterval, isToday, isFuture,
@@ -183,15 +182,9 @@ export function DashboardPage({ onNavigate }: Props) {
             <TrendingUp size={16} className="text-slate-400" />
             <p className="text-slate-400 text-sm">{t.dash.totalEarnings}</p>
           </div>
-          <motion.p
-            key={totalEarnings.toFixed(2)}
-            initial={{ scale: 1.04, color: '#fde68a' }}
-            animate={{ scale: 1,    color: '#fbbf24' }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="text-4xl font-black tracking-tight tabular-nums"
-          >
+          <p className="text-amber-400 text-4xl font-black tracking-tight tabular-nums">
             {cur} {animatedTotal.toFixed(2)}
-          </motion.p>
+          </p>
 
           {tipsDiff !== null && (
             <div className="mt-2">

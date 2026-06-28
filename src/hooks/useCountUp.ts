@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
-export function useCountUp(target: number, duration = 1600) {
-  const [display, setDisplay] = useState(target);
-  const prevRef = useRef(target);
+export function useCountUp(target: number, duration = 1800) {
+  // Start from 0 so the number always rolls up on mount
+  const [display, setDisplay] = useState(0);
+  const prevRef = useRef(0);
   const rafRef  = useRef(0);
 
   useEffect(() => {
@@ -14,8 +15,8 @@ export function useCountUp(target: number, duration = 1600) {
     const startTime = performance.now();
 
     const tick = (now: number) => {
-      const t      = Math.min((now - startTime) / duration, 1);
-      const eased  = t === 1 ? 1 : 1 - Math.pow(2, -10 * t); // easeOutExpo
+      const t     = Math.min((now - startTime) / duration, 1);
+      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t); // easeOutExpo
       setDisplay(from + (target - from) * eased);
       if (t < 1) rafRef.current = requestAnimationFrame(tick);
     };
