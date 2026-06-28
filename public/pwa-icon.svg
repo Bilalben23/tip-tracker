@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Amber rounded-square background -->
+  <rect width="512" height="512" rx="96" fill="#f59e0b"/>
+  <!-- Coin outer ring -->
+  <circle cx="256" cy="256" r="178" fill="#d97706"/>
+  <!-- Coin face -->
+  <circle cx="256" cy="256" r="152" fill="#fbbf24"/>
+  <!-- Bold "T" — horizontal bar -->
+  <rect x="148" y="164" width="216" height="36" rx="12" fill="#92400e"/>
+  <!-- Bold "T" — vertical stem -->
+  <rect x="230" y="196" width="52" height="164" rx="12" fill="#92400e"/>
+</svg>

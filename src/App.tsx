@@ -8,6 +8,7 @@ import { HistoryPage } from './pages/HistoryPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { GuidePage } from './pages/GuidePage';
 import { BottomNav } from './components/BottomNav';
+import { PwaUpdateBanner } from './components/PwaUpdateBanner';
 import type { Page } from './types';
 
 function AppContent() {
@@ -31,6 +32,7 @@ function AppContent() {
       {page === 'profile' && <ProfilePage onNavigate={navigate} />}
       {page === 'guide' && <GuidePage onBack={() => navigate('profile')} />}
       {page !== 'guide' && <BottomNav current={page} onNavigate={p => navigate(p)} />}
+      <PwaUpdateBanner />
     </div>
   );
 }
