@@ -5,6 +5,8 @@ export interface T {
   tagline: string;
   dataLocal: string;
   chooseLanguage: string;
+  pwaUpdate: string;
+  pwaUpdateBtn: string;
 
   nav: { home: string; log: string; history: string; profile: string };
 
@@ -140,6 +142,8 @@ export const translations: Record<Language, T> = {
     tagline: 'Track every dirham you earn',
     dataLocal: 'Data stored locally on your device',
     chooseLanguage: 'Choose language',
+    pwaUpdate: 'New version available',
+    pwaUpdateBtn: 'Update',
 
     nav: { home: 'Home', log: 'Log Day', history: 'History', profile: 'Profile' },
 
@@ -300,6 +304,8 @@ export const translations: Record<Language, T> = {
     tagline: 'Suivez chaque dirham gagné',
     dataLocal: 'Données stockées localement sur votre téléphone',
     chooseLanguage: 'Choisir la langue',
+    pwaUpdate: 'Nouvelle version disponible',
+    pwaUpdateBtn: 'Mettre à jour',
 
     nav: { home: 'Accueil', log: 'Saisir', history: 'Historique', profile: 'Profil' },
 
@@ -460,6 +466,8 @@ export const translations: Record<Language, T> = {
     tagline: 'تابع كل درهم تكسبه',
     dataLocal: 'البيانات محفوظة محلياً على هاتفك',
     chooseLanguage: 'اختر اللغة',
+    pwaUpdate: 'إصدار جديد متاح',
+    pwaUpdateBtn: 'تحديث',
 
     nav: { home: 'الرئيسية', log: 'تسجيل', history: 'السجل', profile: 'الملف' },
 
