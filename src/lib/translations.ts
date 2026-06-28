@@ -78,6 +78,8 @@ export interface T {
     dayLabel: string;
     shareMonth: string;
     shareCopied: string;
+    vsLastMonth: string;
+    vsLastMonthSame: string;
   };
 
   log: {
@@ -244,6 +246,8 @@ export const translations: Record<Language, T> = {
       dayLabel: 'Day',
       shareMonth: 'Share month summary',
       shareCopied: 'Copied to clipboard!',
+      vsLastMonth: 'vs last month',
+      vsLastMonthSame: '→ same as last month',
     },
 
     log: {
@@ -435,6 +439,8 @@ export const translations: Record<Language, T> = {
       dayLabel: 'Jour',
       shareMonth: 'Partager le résumé du mois',
       shareCopied: 'Copié dans le presse-papiers !',
+      vsLastMonth: 'vs mois dernier',
+      vsLastMonthSame: '→ identique au mois dernier',
     },
 
     log: {
@@ -626,6 +632,8 @@ export const translations: Record<Language, T> = {
       dayLabel: 'يوم',
       shareMonth: 'مشاركة ملخص الشهر',
       shareCopied: 'تم النسخ!',
+      vsLastMonth: 'مقارنة بالشهر الماضي',
+      vsLastMonthSame: '→ نفس الشهر الماضي',
     },
 
     log: {

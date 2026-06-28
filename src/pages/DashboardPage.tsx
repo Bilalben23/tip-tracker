@@ -43,6 +43,19 @@ export function DashboardPage({ onNavigate }: Props) {
   const workedEntries = entries.filter(e => e.worked);
   const offEntries = entries.filter(e => !e.worked);
   const totalTips = workedEntries.reduce((s, e) => s + e.tips, 0);
+
+  const prevTips = useMemo(() => {
+    if (!user) return null;
+    const d = parseISO(selectedMonth + '-01');
+    const prevMonth = format(new Date(d.getFullYear(), d.getMonth() - 1, 1), 'yyyy-MM');
+    return entriesLib.getForMonth(user.id, prevMonth)
+      .filter(e => e.worked)
+      .reduce((s, e) => s + e.tips, 0);
+  }, [user, selectedMonth]);
+
+  const tipsDiff = prevTips !== null && prevTips > 0
+    ? ((totalTips - prevTips) / prevTips) * 100
+    : null;
   const bonusAmount_ = monthBonus?.amount ?? 0;
   const salary = user?.salary ?? 0;
   const totalEarnings = totalTips + bonusAmount_ + salary;
@@ -169,6 +182,25 @@ export function DashboardPage({ onNavigate }: Props) {
           <p className="text-amber-400 text-4xl font-black tracking-tight">
             {cur} {totalEarnings.toFixed(2)}
           </p>
+
+          {tipsDiff !== null && (
+            <div className="mt-2">
+              <span className={`inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full ${
+                tipsDiff > 0
+                  ? 'bg-emerald-500/15 text-emerald-400'
+                  : tipsDiff < 0
+                  ? 'bg-red-500/15 text-red-400'
+                  : 'bg-slate-700/60 text-slate-400'
+              }`}>
+                {tipsDiff > 0 ? '↑' : tipsDiff < 0 ? '↓' : '→'}
+                {' '}
+                {tipsDiff === 0
+                  ? t.dash.vsLastMonthSame
+                  : `${tipsDiff > 0 ? '+' : ''}${tipsDiff.toFixed(1)}% ${t.dash.vsLastMonth}`}
+              </span>
+            </div>
+          )}
+
           <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 pt-3 border-t border-slate-800">
             <Pill icon={<Coins size={13} className="text-amber-400" />} color="text-amber-400"
               label={t.dash.tips} value={`${cur} ${totalTips.toFixed(2)}`} />
