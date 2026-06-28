@@ -76,6 +76,8 @@ export interface T {
     perDay: string;
     workedNoTips: string;
     dayLabel: string;
+    shareMonth: string;
+    shareCopied: string;
   };
 
   log: {
@@ -240,6 +242,8 @@ export const translations: Record<Language, T> = {
       perDay: '/day',
       workedNoTips: 'Worked · no tips',
       dayLabel: 'Day',
+      shareMonth: 'Share month summary',
+      shareCopied: 'Copied to clipboard!',
     },
 
     log: {
@@ -429,6 +433,8 @@ export const translations: Record<Language, T> = {
       perDay: '/jour',
       workedNoTips: 'Travaillé · sans pourboire',
       dayLabel: 'Jour',
+      shareMonth: 'Partager le résumé du mois',
+      shareCopied: 'Copié dans le presse-papiers !',
     },
 
     log: {
@@ -618,6 +624,8 @@ export const translations: Record<Language, T> = {
       perDay: '/ يوم',
       workedNoTips: 'عمل · بدون بقشيش',
       dayLabel: 'يوم',
+      shareMonth: 'مشاركة ملخص الشهر',
+      shareCopied: 'تم النسخ!',
     },
 
     log: {

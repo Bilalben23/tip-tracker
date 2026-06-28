@@ -5,7 +5,7 @@ import {
 } from 'date-fns';
 import {
   TrendingUp, CheckCircle2, XCircle, Trophy, Flame,
-  ChevronLeft, ChevronRight, Plus, Coins, Gift, Briefcase, Pencil, X, Save,
+  ChevronLeft, ChevronRight, Plus, Coins, Gift, Briefcase, Pencil, X, Save, Share2,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
@@ -95,6 +95,40 @@ export function DashboardPage({ onNavigate }: Props) {
   };
 
   const cur = user?.currency ?? 'DH';
+  const [shareCopied, setShareCopied] = useState(false);
+
+  const shareSummary = async () => {
+    const monthLabel = format(monthDate, 'MMMM yyyy', { locale: dateLocale });
+    const avgTips = workedEntries.length > 0
+      ? (totalTips / workedEntries.length).toFixed(2)
+      : '0.00';
+
+    const lines = [
+      `📊 TipTracker — ${monthLabel}`,
+      '',
+      `💰 ${t.dash.tips}: ${cur} ${totalTips.toFixed(2)}`,
+      bonusAmount_ > 0 ? `🎁 ${t.dash.bonus}: ${cur} ${bonusAmount_.toFixed(2)}` : null,
+      `💵 ${t.dash.salary}: ${cur} ${salary.toFixed(2)}`,
+      `📈 ${t.dash.totalEarnings}: ${cur} ${totalEarnings.toFixed(2)}`,
+      '',
+      `📅 ${t.dash.worked}: ${workedEntries.length}`,
+      offEntries.length > 0 ? `🏖️ ${t.dash.daysOff}: ${offEntries.length}` : null,
+      bestDay && bestDay.tips > 0 ? `⭐ ${t.dash.bestDay}: ${cur} ${bestDay.tips.toFixed(2)}` : null,
+      `📊 ${t.dash.avg}: ${cur} ${avgTips}${t.dash.perDay}`,
+    ].filter(Boolean).join('\n');
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ text: lines });
+      } else {
+        await navigator.clipboard.writeText(lines);
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2500);
+      }
+    } catch {
+      // user cancelled share sheet — ignore
+    }
+  };
 
   const Chevron = ({ dir: d }: { dir: 'left' | 'right' }) => {
     const L = <ChevronLeft size={22} />;
@@ -143,6 +177,15 @@ export function DashboardPage({ onNavigate }: Props) {
             <Pill icon={<Briefcase size={13} className="text-blue-400" />} color="text-blue-400"
               label={t.dash.salary} value={`${cur} ${salary.toFixed(2)}`} />
           </div>
+
+          <button
+            onClick={shareSummary}
+            className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-700 text-slate-400 active:bg-slate-800 transition-colors text-sm font-semibold"
+          >
+            {shareCopied
+              ? <><span className="text-green-400">✓</span> {t.dash.shareCopied}</>
+              : <><Share2 size={15} /> {t.dash.shareMonth}</>}
+          </button>
         </div>
 
         {/* Stats row */}
