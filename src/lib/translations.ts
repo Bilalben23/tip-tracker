@@ -20,6 +20,8 @@ export interface T {
     noOne: string;
     selectAll: string;
     selectNone: string;
+    saveBtn: string;
+    savedMsg: string;
   };
 
   auth: {
@@ -180,6 +182,8 @@ export const translations: Record<Language, T> = {
       noOne: 'Select at least one person',
       selectAll: 'Select all',
       selectNone: 'None',
+      saveBtn: '💾 Save as my tips today',
+      savedMsg: 'Saved to today!',
     },
 
     auth: {
@@ -365,6 +369,8 @@ export const translations: Record<Language, T> = {
       noOne: 'Sélectionnez au moins une personne',
       selectAll: 'Tout sélectionner',
       selectNone: 'Aucun',
+      saveBtn: '💾 Enregistrer comme mes pourboires du jour',
+      savedMsg: 'Enregistré pour aujourd\'hui !',
     },
 
     auth: {
@@ -550,6 +556,8 @@ export const translations: Record<Language, T> = {
       noOne: 'اختر شخصاً واحداً على الأقل',
       selectAll: 'الكل',
       selectNone: 'لا أحد',
+      saveBtn: '💾 حفظ كبقشيش اليوم',
+      savedMsg: 'تم الحفظ لليوم!',
     },
 
     auth: {

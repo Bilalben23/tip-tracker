@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { format } from 'date-fns';
 import { useLang } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
+import { entriesLib } from '../lib/entries';
+import { idbSet } from '../lib/idb';
 
 const TEAM = ['Bilal', 'Yassin', 'Wael', 'Azhar', 'Youssef', 'Omar', 'Moad'];
 
@@ -13,6 +16,25 @@ export function SplitPage() {
 
   const [total, setTotal] = useState('');
   const [selected, setSelected] = useState<Set<string>>(new Set(TEAM));
+  const [saved, setSaved] = useState(false);
+
+  const saveMyTips = () => {
+    if (!user || share <= 0) return;
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const existing = entriesLib.getForDate(user.id, today);
+    entriesLib.upsert(user.id, {
+      id: existing?.id ?? crypto.randomUUID(),
+      userId: user.id,
+      date: today,
+      worked: true,
+      tips: parseFloat(share.toFixed(2)),
+      notes: existing?.notes ?? '',
+      createdAt: existing?.createdAt ?? new Date().toISOString(),
+    });
+    idbSet('lastEntryDate', today).catch(() => {});
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  };
 
   const toggle = (name: string) =>
     setSelected(prev => {
@@ -160,6 +182,19 @@ export function SplitPage() {
                       </span>
                     </motion.div>
                   ))}
+
+                  {/* Save my tips button */}
+                  <motion.button
+                    onClick={saveMyTips}
+                    whileTap={{ scale: 0.96 }}
+                    className={`w-full mt-3 py-3 rounded-xl font-black text-sm transition-colors ${
+                      saved
+                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        : 'bg-amber-500 text-slate-900 active:bg-amber-400'
+                    }`}
+                  >
+                    {saved ? `✓ ${s.savedMsg}` : s.saveBtn}
+                  </motion.button>
                 </div>
               )}
             </motion.div>
