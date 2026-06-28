@@ -4,7 +4,7 @@ import {
   eachDayOfInterval, isToday, isFuture,
 } from 'date-fns';
 import {
-  TrendingUp, CheckCircle2, XCircle, Trophy,
+  TrendingUp, CheckCircle2, XCircle, Trophy, Flame,
   ChevronLeft, ChevronRight, Plus, Coins, Gift, Briefcase, Pencil, X, Save,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -37,6 +37,8 @@ export function DashboardPage({ onNavigate }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [user, selectedMonth, editingBonus]
   );
+
+  const streak = useMemo(() => (user ? entriesLib.calcStreak(user.id) : 0), [user]);
 
   const workedEntries = entries.filter(e => e.worked);
   const offEntries = entries.filter(e => !e.worked);
@@ -144,13 +146,18 @@ export function DashboardPage({ onNavigate }: Props) {
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5">
           <StatChip icon={<CheckCircle2 size={18} className="text-emerald-400" />}
             value={workedEntries.length} label={t.dash.worked} />
           <StatChip icon={<XCircle size={18} className="text-red-400" />}
             value={offEntries.length} label={t.dash.daysOff} />
           <StatChip icon={<Trophy size={18} className="text-amber-400" />}
             value={bestDay ? `${cur}${bestDay.tips.toFixed(0)}` : '—'} label={t.dash.bestDay} />
+          <StatChip
+            icon={<Flame size={18} className={streak > 0 ? 'text-orange-400' : 'text-slate-600'} />}
+            value={streak > 0 ? `🔥 ${streak}` : '—'}
+            label={t.dash.streak}
+          />
         </div>
 
         {/* Tips chart */}

@@ -4,6 +4,7 @@ import { CheckCircle2, XCircle, Coins, StickyNote, Trash2, Save, ChevronLeft, Ch
 import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
 import { entriesLib } from '../lib/entries';
+import { ConfettiBlast } from '../components/ConfettiBlast';
 import type { DayEntry } from '../types';
 
 interface Props { initialDate?: string }
@@ -20,6 +21,7 @@ export function LogDayPage({ initialDate }: Props) {
   const [saved, setSaved] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [hasEntry, setHasEntry] = useState(false);
+  const [newBest, setNewBest] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -44,11 +46,16 @@ export function LogDayPage({ initialDate }: Props) {
 
   const handleSave = () => {
     if (!user) return;
+    const newTips = parseFloat(tips) || 0;
+    const prevBest = entriesLib.getAll(user.id)
+      .filter(e => e.date !== date && e.worked)
+      .reduce((m, e) => Math.max(m, e.tips), 0);
+
     const existing = entriesLib.getForDate(user.id, date);
     const entry: DayEntry = {
       id: existing?.id ?? crypto.randomUUID(),
       userId: user.id, date, worked,
-      tips: parseFloat(tips) || 0,
+      tips: newTips,
       notes: notes.trim(),
       createdAt: existing?.createdAt ?? new Date().toISOString(),
     };
@@ -56,6 +63,10 @@ export function LogDayPage({ initialDate }: Props) {
     setHasEntry(true);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
+
+    if (worked && newTips > 0 && newTips > prevBest) {
+      setNewBest(true);
+    }
   };
 
   const handleDelete = () => {
@@ -180,7 +191,14 @@ export function LogDayPage({ initialDate }: Props) {
 
         {saved && <p className="text-center text-emerald-400 font-semibold text-sm py-1">{t.log.savedMsg}</p>}
         {deleted && <p className="text-center text-red-400 font-semibold text-sm py-1">{t.log.deletedMsg}</p>}
+        {newBest && (
+          <p className="text-center text-amber-400 font-black text-base py-1 animate-bounce">
+            {t.log.newBest}
+          </p>
+        )}
       </div>
+
+      {newBest && <ConfettiBlast onDone={() => setNewBest(false)} />}
     </div>
   );
 }

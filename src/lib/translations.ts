@@ -40,6 +40,7 @@ export interface T {
     worked: string;
     daysOff: string;
     bestDay: string;
+    streak: string;
     monthOverview: string;
     recentDays: string;
     seeAll: string;
@@ -77,6 +78,7 @@ export interface T {
     delete: string;
     savedMsg: string;
     deletedMsg: string;
+    newBest: string;
   };
 
   history: {
@@ -177,6 +179,7 @@ export const translations: Record<Language, T> = {
       worked: 'Worked',
       daysOff: 'Days Off',
       bestDay: 'Best Day',
+      streak: 'Day Streak',
       monthOverview: 'Month Overview',
       recentDays: 'Recent Days',
       seeAll: 'See all →',
@@ -214,6 +217,7 @@ export const translations: Record<Language, T> = {
       delete: 'Delete',
       savedMsg: '✓ Day saved successfully!',
       deletedMsg: 'Entry deleted.',
+      newBest: '🏆 New best day!',
     },
 
     history: {
@@ -339,6 +343,7 @@ export const translations: Record<Language, T> = {
       worked: 'Travaillés',
       daysOff: 'Congés',
       bestDay: 'Meilleur jour',
+      streak: 'Jours consécutifs',
       monthOverview: 'Aperçu du mois',
       recentDays: 'Derniers jours',
       seeAll: 'Voir tout →',
@@ -376,6 +381,7 @@ export const translations: Record<Language, T> = {
       delete: 'Supprimer',
       savedMsg: '✓ Jour enregistré avec succès !',
       deletedMsg: 'Entrée supprimée.',
+      newBest: '🏆 Nouveau record !',
     },
 
     history: {
@@ -501,6 +507,7 @@ export const translations: Record<Language, T> = {
       worked: 'أيام العمل',
       daysOff: 'أيام الراحة',
       bestDay: 'أفضل يوم',
+      streak: 'أيام متتالية',
       monthOverview: 'نظرة على الشهر',
       recentDays: 'الأيام الأخيرة',
       seeAll: '← عرض الكل',
@@ -538,6 +545,7 @@ export const translations: Record<Language, T> = {
       delete: 'حذف',
       savedMsg: '✓ تم حفظ اليوم بنجاح!',
       deletedMsg: 'تم حذف الإدخال.',
+      newBest: '🏆 أفضل يوم على الإطلاق!',
     },
 
     history: {

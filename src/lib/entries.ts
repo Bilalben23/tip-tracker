@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { storage } from './storage';
 import type { DayEntry } from '../types';
 
@@ -20,5 +21,19 @@ export const entriesLib = {
 
   remove: (uid: string, date: string): void => {
     storage.saveEntries(uid, storage.getEntries(uid).filter(e => e.date !== date));
+  },
+
+  calcStreak: (uid: string): number => {
+    const dateSet = new Set(storage.getEntries(uid).map(e => e.date));
+    const today = format(new Date(), 'yyyy-MM-dd');
+    const cursor = new Date();
+    // If today isn't logged yet, start streak check from yesterday
+    if (!dateSet.has(today)) cursor.setDate(cursor.getDate() - 1);
+    let streak = 0;
+    while (dateSet.has(format(cursor, 'yyyy-MM-dd'))) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+    return streak;
   },
 };
