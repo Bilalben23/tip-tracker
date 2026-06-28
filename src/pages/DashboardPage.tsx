@@ -12,7 +12,6 @@ import { useLang } from '../contexts/LanguageContext';
 import { entriesLib } from '../lib/entries';
 import { bonusesLib } from '../lib/bonuses';
 import { TipsChart } from '../components/TipsChart';
-import { useCountUp } from '../hooks/useCountUp';
 import type { MonthlyBonus, Page } from '../types';
 
 interface Props {
@@ -110,9 +109,6 @@ export function DashboardPage({ onNavigate }: Props) {
 
   const cur = user?.currency ?? 'DH';
   const [shareCopied, setShareCopied] = useState(false);
-  const animatedTotal = useCountUp(totalEarnings);
-  const animatedTips  = useCountUp(totalTips);
-
   const shareSummary = async () => {
     const monthLabel = format(monthDate, 'MMMM yyyy', { locale: dateLocale });
     const avgTips = workedEntries.length > 0
@@ -182,8 +178,8 @@ export function DashboardPage({ onNavigate }: Props) {
             <TrendingUp size={16} className="text-slate-400" />
             <p className="text-slate-400 text-sm">{t.dash.totalEarnings}</p>
           </div>
-          <p className="text-amber-400 text-4xl font-black tracking-tight tabular-nums">
-            {cur} {animatedTotal.toFixed(2)}
+          <p className="text-amber-400 text-4xl font-black tracking-tight">
+            {cur} {totalEarnings.toFixed(2)}
           </p>
 
           {tipsDiff !== null && (
@@ -206,7 +202,7 @@ export function DashboardPage({ onNavigate }: Props) {
 
           <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 pt-3 border-t border-slate-800">
             <Pill icon={<Coins size={13} className="text-amber-400" />} color="text-amber-400"
-              label={t.dash.tips} value={`${cur} ${animatedTips.toFixed(2)}`} />
+              label={t.dash.tips} value={`${cur} ${totalTips.toFixed(2)}`} />
             <Pill icon={<Gift size={13} className="text-purple-400" />} color="text-purple-400"
               label={t.dash.bonus} value={`${cur} ${bonusAmount_.toFixed(2)}`} />
             <Pill icon={<Briefcase size={13} className="text-blue-400" />} color="text-blue-400"
