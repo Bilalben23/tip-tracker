@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Briefcase, DollarSign, Lock, LogOut,
   TrendingUp, CheckCircle2, Coins, Edit3, Save, X, BookOpen, ChevronRight,
+  Download, Upload, Database, AlertTriangle,
 } from 'lucide-react';
+import { format } from 'date-fns';
 import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
 import { entriesLib } from '../lib/entries';
 import { bonusesLib } from '../lib/bonuses';
-import type { Language, Page } from '../types';
+import { storage } from '../lib/storage';
+import type { DayEntry, Language, MonthlyBonus, Page } from '../types';
+
+interface BackupFile {
+  version: number;
+  exportedAt: string;
+  username: string;
+  entries: DayEntry[];
+  bonuses: MonthlyBonus[];
+}
 
 const CURRENCIES = [
   { symbol: 'DH', label: 'MAD — درهم' },
@@ -37,6 +48,12 @@ export function ProfilePage({ onNavigate }: Props) {
   const [pwSuccess, setPwSuccess] = useState(false);
   const [editingCurrency, setEditingCurrency] = useState(false);
 
+  // Backup / Restore
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [restorePhase, setRestorePhase] = useState<'idle' | 'confirm' | 'done' | 'error'>('idle');
+  const [restoreMsg, setRestoreMsg] = useState('');
+  const [pending, setPending] = useState<BackupFile | null>(null);
+
   if (!user) return null;
 
   const allEntries = entriesLib.getAll(user.id);
@@ -50,6 +67,63 @@ export function ProfilePage({ onNavigate }: Props) {
   const saveSalary = () => {
     updateUser({ salary: parseFloat(salaryInput) || 0 });
     setEditingSalary(false);
+  };
+
+  const exportBackup = () => {
+    const data: BackupFile = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      username: user.username,
+      entries: entriesLib.getAll(user.id),
+      bonuses: bonusesLib.getAll(user.id),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `tiptracker-${user.username}-${format(new Date(), 'yyyy-MM-dd')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = '';
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target?.result as string) as BackupFile;
+        if (!data.version || !Array.isArray(data.entries) || !Array.isArray(data.bonuses)) {
+          setRestoreMsg(t.profile.backupErrFormat);
+          setRestorePhase('error');
+          return;
+        }
+        if (data.username !== user.username) {
+          setRestoreMsg(t.profile.backupErrUser.replace('{u}', data.username));
+          setRestorePhase('error');
+          return;
+        }
+        setPending(data);
+        setRestorePhase('confirm');
+      } catch {
+        setRestoreMsg(t.profile.backupErrFormat);
+        setRestorePhase('error');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const confirmRestore = () => {
+    if (!pending) return;
+    storage.saveEntries(user.id, pending.entries);
+    storage.saveBonuses(user.id, pending.bonuses);
+    setPending(null);
+    setRestoreMsg(t.profile.backupRestored
+      .replace('{e}', String(pending.entries.length))
+      .replace('{b}', String(pending.bonuses.length)));
+    setRestorePhase('done');
+    setTimeout(() => setRestorePhase('idle'), 4000);
   };
 
   const savePassword = () => {
@@ -185,6 +259,66 @@ export function ProfilePage({ onNavigate }: Props) {
           <span className="text-white font-semibold text-sm">{t.profile.guideBtn}</span>
           <ChevronRight_ isRTL={false} />
         </button>
+
+        {/* Backup & Restore */}
+        <div className="bg-slate-900 rounded-2xl border border-slate-800 p-4">
+          <div className="flex items-center gap-2 mb-1">
+            <Database size={15} className="text-sky-400" />
+            <p className="text-slate-300 text-sm font-semibold">{t.profile.backupTitle}</p>
+          </div>
+          <p className="text-slate-500 text-xs mb-3">{t.profile.backupSubtitle}</p>
+
+          <div className="flex gap-2">
+            <button
+              onClick={exportBackup}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-sky-600/20 border border-sky-600/40 text-sky-400 rounded-xl text-sm font-bold active:bg-sky-600/30 transition-colors"
+            >
+              <Download size={14} /> {t.profile.backupExport}
+            </button>
+            <button
+              onClick={() => { setRestorePhase('idle'); fileRef.current?.click(); }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-xl text-sm font-bold active:bg-slate-700 transition-colors"
+            >
+              <Upload size={14} /> {t.profile.backupImport}
+            </button>
+          </div>
+
+          <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={handleFileSelect} />
+
+          {/* Confirm */}
+          {restorePhase === 'confirm' && (
+            <div className="mt-3 bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 space-y-2">
+              <div className="flex items-start gap-2">
+                <AlertTriangle size={15} className="text-amber-400 shrink-0 mt-0.5" />
+                <p className="text-amber-300 text-xs font-semibold leading-snug">
+                  {t.profile.backupConfirm
+                    .replace('{e}', String(pending?.entries.length ?? 0))
+                    .replace('{b}', String(pending?.bonuses.length ?? 0))}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => setRestorePhase('idle')}
+                  className="flex-1 py-2 bg-slate-800 text-slate-300 rounded-lg text-xs font-bold">
+                  {t.profile.cancel}
+                </button>
+                <button onClick={confirmRestore}
+                  className="flex-1 py-2 bg-amber-500 text-slate-900 rounded-lg text-xs font-black">
+                  {t.profile.backupConfirmBtn}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Success */}
+          {restorePhase === 'done' && (
+            <p className="mt-2 text-emerald-400 text-xs font-semibold">✓ {restoreMsg}</p>
+          )}
+
+          {/* Error */}
+          {restorePhase === 'error' && (
+            <p className="mt-2 text-red-400 text-xs font-semibold">⚠ {restoreMsg}</p>
+          )}
+        </div>
 
         {/* Account info */}
         <div className="bg-slate-900 rounded-2xl border border-slate-800 p-4">

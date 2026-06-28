@@ -138,6 +138,15 @@ export interface T {
     logout: string;
     guideBtn: string;
     languageLabel: string;
+    backupTitle: string;
+    backupSubtitle: string;
+    backupExport: string;
+    backupImport: string;
+    backupConfirm: string;
+    backupConfirmBtn: string;
+    backupRestored: string;
+    backupErrFormat: string;
+    backupErrUser: string;
   };
 
   guide: {
@@ -306,6 +315,15 @@ export const translations: Record<Language, T> = {
       logout: 'Log Out',
       guideBtn: 'User Guide',
       languageLabel: 'Language',
+      backupTitle: 'Backup & Restore',
+      backupSubtitle: 'Export your data to keep it safe. Import on a new phone.',
+      backupExport: 'Export',
+      backupImport: 'Import',
+      backupConfirm: 'Replace your current data with {e} entries and {b} bonuses from the backup?',
+      backupConfirmBtn: 'Yes, restore',
+      backupRestored: 'Restored {e} entries and {b} bonuses.',
+      backupErrFormat: 'Invalid backup file.',
+      backupErrUser: 'This backup belongs to "{u}", not your account.',
     },
 
     guide: {
@@ -499,6 +517,15 @@ export const translations: Record<Language, T> = {
       logout: 'Se déconnecter',
       guideBtn: 'Guide utilisateur',
       languageLabel: 'Langue',
+      backupTitle: 'Sauvegarde & Restauration',
+      backupSubtitle: 'Exportez vos données pour les sécuriser. Importez sur un nouveau téléphone.',
+      backupExport: 'Exporter',
+      backupImport: 'Importer',
+      backupConfirm: 'Remplacer vos données actuelles par {e} entrées et {b} primes de la sauvegarde ?',
+      backupConfirmBtn: 'Oui, restaurer',
+      backupRestored: '{e} entrées et {b} primes restaurées.',
+      backupErrFormat: 'Fichier de sauvegarde invalide.',
+      backupErrUser: 'Cette sauvegarde appartient à « {u} », pas à votre compte.',
     },
 
     guide: {
@@ -692,6 +719,15 @@ export const translations: Record<Language, T> = {
       logout: 'تسجيل الخروج',
       guideBtn: 'دليل الاستخدام',
       languageLabel: 'اللغة',
+      backupTitle: 'النسخ الاحتياطي والاستعادة',
+      backupSubtitle: 'صدّر بياناتك لحفظها. استوردها على هاتف جديد.',
+      backupExport: 'تصدير',
+      backupImport: 'استيراد',
+      backupConfirm: 'استبدال بياناتك الحالية بـ {e} إدخالاً و{b} مكافآت من النسخة الاحتياطية؟',
+      backupConfirmBtn: 'نعم، استعادة',
+      backupRestored: 'تمت استعادة {e} إدخالاً و{b} مكافآت.',
+      backupErrFormat: 'ملف النسخة الاحتياطية غير صالح.',
+      backupErrUser: 'هذه النسخة تخص « {u} » وليس حسابك.',
     },
 
     guide: {
