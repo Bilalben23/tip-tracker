@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Briefcase, DollarSign, Lock, LogOut,
   TrendingUp, CheckCircle2, Coins, Edit3, Save, X, BookOpen, ChevronRight,
-  Download, Upload, Database, AlertTriangle,
+  Download, Upload, Database, AlertTriangle, Smile,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,6 +12,13 @@ import { entriesLib } from '../lib/entries';
 import { bonusesLib } from '../lib/bonuses';
 import { storage } from '../lib/storage';
 import type { DayEntry, Language, MonthlyBonus, Page } from '../types';
+
+const EMOJIS = [
+  '😎','🤩','🥳','🤑','😏','😜','🧐','🤓','😇','🥰','😤','🤣',
+  '👑','⭐','🔥','💪','✨','💫','💰','💸','🏆','🎯','🎪','🦸',
+  '👨‍🍳','👩‍🍳','🧑‍🍳','🍕','🍷','☕','🍔','🍣','🥗','🍝','🎂','🧆',
+  '🦁','🐯','🦊','🦝','🐺','🦅','🐬','🦋','🌟','🌈','🍀','🌺',
+];
 
 interface BackupFile {
   version: number;
@@ -47,6 +55,8 @@ export function ProfilePage({ onNavigate }: Props) {
   const [pwError, setPwError] = useState('');
   const [pwSuccess, setPwSuccess] = useState(false);
   const [editingCurrency, setEditingCurrency] = useState(false);
+
+  const [pickingAvatar, setPickingAvatar] = useState(false);
 
   // Backup / Restore
   const fileRef = useRef<HTMLInputElement>(null);
@@ -145,14 +155,78 @@ export function ProfilePage({ onNavigate }: Props) {
 
       <div className="px-4 pt-4 space-y-3">
         {/* Avatar */}
-        <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5 flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-amber-500 to-orange-600 flex items-center justify-center text-slate-900 text-xl font-black shadow-lg shadow-amber-900/30 shrink-0">
-            {initials}
+        <div className="bg-slate-900 rounded-2xl border border-slate-800 p-5">
+          <div className="flex items-center gap-4">
+            {/* Tappable avatar */}
+            <motion.button
+              whileTap={{ scale: 0.92 }}
+              onClick={() => setPickingAvatar(p => !p)}
+              className="relative shrink-0 group"
+            >
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shrink-0 transition-colors ${
+                user.avatar
+                  ? 'bg-slate-800 text-4xl'
+                  : 'bg-linear-to-br from-amber-500 to-orange-600 text-slate-900 text-xl font-black shadow-amber-900/30'
+              }`}>
+                {user.avatar ?? initials}
+              </div>
+              {/* Edit hint */}
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center">
+                <Smile size={11} className="text-amber-400" />
+              </div>
+            </motion.button>
+
+            <div>
+              <h2 className="text-white text-xl font-black">{user.username}</h2>
+              <p className="text-slate-400 text-sm mt-0.5">{t.profile.worker}</p>
+              <button
+                onClick={() => setPickingAvatar(p => !p)}
+                className="text-amber-400 text-xs font-semibold mt-1 active:opacity-70"
+              >
+                {pickingAvatar ? '✕ ' : '✏ '}{t.profile.avatarPick}
+              </button>
+            </div>
           </div>
-          <div>
-            <h2 className="text-white text-xl font-black">{user.username}</h2>
-            <p className="text-slate-400 text-sm mt-0.5">{t.profile.worker}</p>
-          </div>
+
+          {/* Emoji grid */}
+          <AnimatePresence>
+            {pickingAvatar && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-4 pt-4 border-t border-slate-800 grid grid-cols-8 gap-1.5">
+                  {EMOJIS.map(e => (
+                    <motion.button
+                      key={e}
+                      whileTap={{ scale: 0.8 }}
+                      onClick={() => { updateUser({ avatar: e }); setPickingAvatar(false); }}
+                      className={`text-2xl aspect-square flex items-center justify-center rounded-xl transition-colors ${
+                        user.avatar === e
+                          ? 'bg-amber-500/25 ring-2 ring-amber-500'
+                          : 'bg-slate-800 active:bg-slate-700'
+                      }`}
+                    >
+                      {e}
+                    </motion.button>
+                  ))}
+                  {/* Remove / reset to initials */}
+                  {user.avatar && (
+                    <motion.button
+                      whileTap={{ scale: 0.8 }}
+                      onClick={() => { updateUser({ avatar: undefined }); setPickingAvatar(false); }}
+                      className="text-xs aspect-square flex items-center justify-center rounded-xl bg-slate-800 text-slate-500 active:bg-slate-700 col-span-1"
+                    >
+                      ✕
+                    </motion.button>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* All-time stats */}

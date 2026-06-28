@@ -5,6 +5,7 @@ export interface User {
   salary: number;
   currency: string;
   createdAt: string;
+  avatar?: string;
 }
 
 export interface DayEntry {

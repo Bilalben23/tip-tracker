@@ -138,6 +138,7 @@ export interface T {
     logout: string;
     guideBtn: string;
     languageLabel: string;
+    avatarPick: string;
     backupTitle: string;
     backupSubtitle: string;
     backupExport: string;
@@ -315,6 +316,7 @@ export const translations: Record<Language, T> = {
       logout: 'Log Out',
       guideBtn: 'User Guide',
       languageLabel: 'Language',
+      avatarPick: 'Choose your emoji',
       backupTitle: 'Backup & Restore',
       backupSubtitle: 'Export your data to keep it safe. Import on a new phone.',
       backupExport: 'Export',
@@ -517,6 +519,7 @@ export const translations: Record<Language, T> = {
       logout: 'Se déconnecter',
       guideBtn: 'Guide utilisateur',
       languageLabel: 'Langue',
+      avatarPick: 'Choisir ton emoji',
       backupTitle: 'Sauvegarde & Restauration',
       backupSubtitle: 'Exportez vos données pour les sécuriser. Importez sur un nouveau téléphone.',
       backupExport: 'Exporter',
@@ -719,6 +722,7 @@ export const translations: Record<Language, T> = {
       logout: 'تسجيل الخروج',
       guideBtn: 'دليل الاستخدام',
       languageLabel: 'اللغة',
+      avatarPick: 'اختر إيموجيك',
       backupTitle: 'النسخ الاحتياطي والاستعادة',
       backupSubtitle: 'صدّر بياناتك لحفظها. استوردها على هاتف جديد.',
       backupExport: 'تصدير',
