@@ -8,7 +8,19 @@ export interface T {
   pwaUpdate: string;
   pwaUpdateBtn: string;
 
-  nav: { home: string; log: string; history: string; profile: string };
+  nav: { home: string; log: string; history: string; profile: string; split: string };
+
+  split: {
+    title: string;
+    subtitle: string;
+    totalLabel: string;
+    whoLabel: string;
+    eachGets: string;
+    people: string;
+    noOne: string;
+    selectAll: string;
+    selectNone: string;
+  };
 
   auth: {
     login: string;
@@ -156,7 +168,19 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'New version available',
     pwaUpdateBtn: 'Update',
 
-    nav: { home: 'Home', log: 'Log Day', history: 'History', profile: 'Profile' },
+    nav: { home: 'Home', log: 'Log Day', history: 'History', profile: 'Profile', split: 'Split' },
+
+    split: {
+      title: 'Tip Split',
+      subtitle: "Divide tonight's tips fairly",
+      totalLabel: 'Total tips tonight',
+      whoLabel: "Who's sharing?",
+      eachGets: 'Each person gets',
+      people: 'people',
+      noOne: 'Select at least one person',
+      selectAll: 'Select all',
+      selectNone: 'None',
+    },
 
     auth: {
       login: 'Login',
@@ -329,7 +353,19 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'Nouvelle version disponible',
     pwaUpdateBtn: 'Mettre à jour',
 
-    nav: { home: 'Accueil', log: 'Saisir', history: 'Historique', profile: 'Profil' },
+    nav: { home: 'Accueil', log: 'Saisir', history: 'Historique', profile: 'Profil', split: 'Partage' },
+
+    split: {
+      title: 'Partage des pourboires',
+      subtitle: 'Répartissez les pourboires du soir',
+      totalLabel: 'Total pourboires ce soir',
+      whoLabel: 'Qui partage ?',
+      eachGets: 'Chacun reçoit',
+      people: 'personnes',
+      noOne: 'Sélectionnez au moins une personne',
+      selectAll: 'Tout sélectionner',
+      selectNone: 'Aucun',
+    },
 
     auth: {
       login: 'Connexion',
@@ -502,7 +538,19 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'إصدار جديد متاح',
     pwaUpdateBtn: 'تحديث',
 
-    nav: { home: 'الرئيسية', log: 'تسجيل', history: 'السجل', profile: 'الملف' },
+    nav: { home: 'الرئيسية', log: 'تسجيل', history: 'السجل', profile: 'الملف', split: 'قسمة' },
+
+    split: {
+      title: 'قسمة البقشيش',
+      subtitle: 'وزّع بقشيش الليلة بالتساوي',
+      totalLabel: 'إجمالي البقشيش الليلة',
+      whoLabel: 'من يشارك؟',
+      eachGets: 'كل شخص يأخذ',
+      people: 'أشخاص',
+      noOne: 'اختر شخصاً واحداً على الأقل',
+      selectAll: 'الكل',
+      selectNone: 'لا أحد',
+    },
 
     auth: {
       login: 'تسجيل الدخول',

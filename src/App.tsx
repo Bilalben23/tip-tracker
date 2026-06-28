@@ -7,6 +7,7 @@ import { LogDayPage } from './pages/LogDayPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { GuidePage } from './pages/GuidePage';
+import { SplitPage } from './pages/SplitPage';
 import { BottomNav } from './components/BottomNav';
 import { PwaUpdateBanner } from './components/PwaUpdateBanner';
 import { useNotifications } from './hooks/useNotifications';
@@ -32,6 +33,7 @@ function AppContent() {
       {page === 'log' && <LogDayPage initialDate={logDate} key={logDate ?? 'today'} />}
       {page === 'history' && <HistoryPage onNavigate={navigate} />}
       {page === 'profile' && <ProfilePage onNavigate={navigate} />}
+      {page === 'split' && <SplitPage />}
       {page === 'guide' && <GuidePage onBack={() => navigate('profile')} />}
       {page !== 'guide' && <BottomNav current={page} onNavigate={p => navigate(p)} />}
       <PwaUpdateBanner />
