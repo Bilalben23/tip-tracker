@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useLang } from '../contexts/LanguageContext';
 import { entriesLib } from '../lib/entries';
 import { ConfettiBlast } from '../components/ConfettiBlast';
+import { idbSet } from '../lib/idb';
 import type { DayEntry } from '../types';
 
 interface Props { initialDate?: string }
@@ -63,6 +64,7 @@ export function LogDayPage({ initialDate }: Props) {
     setHasEntry(true);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
+    idbSet('lastEntryDate', date).catch(() => {});
 
     if (worked && newTips > 0 && newTips > prevBest) {
       setNewBest(true);

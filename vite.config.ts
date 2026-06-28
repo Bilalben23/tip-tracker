@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       registerType: 'prompt',
       includeAssets: ['favicon.svg', 'pwa-icon.svg', 'apple-touch-icon-180x180.png'],
       manifest: {
@@ -21,16 +24,14 @@ export default defineConfig({
         start_url: '/',
         scope: '/',
         icons: [
-          { src: 'pwa-64x64.png',              sizes: '64x64',   type: 'image/png' },
+          { src: 'pwa-64x64.png',             sizes: '64x64',   type: 'image/png' },
           { src: 'pwa-192x192.png',            sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512x512.png',            sizes: '512x512', type: 'image/png' },
           { src: 'maskable-icon-512x512.png',  sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
-      workbox: {
+      injectManifest: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        cleanupOutdatedCaches: true,
-        navigateFallback: 'index.html',
       },
       devOptions: {
         enabled: false,

@@ -9,11 +9,13 @@ import { ProfilePage } from './pages/ProfilePage';
 import { GuidePage } from './pages/GuidePage';
 import { BottomNav } from './components/BottomNav';
 import { PwaUpdateBanner } from './components/PwaUpdateBanner';
+import { useNotifications } from './hooks/useNotifications';
 import type { Page } from './types';
 
 function AppContent() {
   const { user } = useAuth();
   const [page, setPage] = useState<Page>('dashboard');
+  useNotifications();
   const [logDate, setLogDate] = useState<string | undefined>();
 
   if (!user) return <AuthPage />;
