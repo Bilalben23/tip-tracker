@@ -135,6 +135,15 @@ export interface T {
       always: string;
       owner: string;
     };
+    beach: {
+      title: string;
+      subtitle: string;
+      btn: string;
+      btnWave: string;
+      btnSwim: string;
+      waterTitle: string;
+      waterSub: string;
+    };
   };
 }
 
@@ -272,6 +281,15 @@ export const translations: Record<Language, T> = {
         altDays: 'alt. days',
         always: 'always',
         owner: 'owner',
+      },
+      beach: {
+        title: 'The Beach',
+        subtitle: 'after-shift vibes 🏖️',
+        btn: '🌊 TSUNAMI!',
+        btnWave: '🌊 incoming...',
+        btnSwim: '🏊 everyone swimming!',
+        waterTitle: '🌊 TSUNAMI! 🌊',
+        waterSub: 'everyone in the water!',
       },
       steps: [
         {
@@ -437,6 +455,15 @@ export const translations: Record<Language, T> = {
         always: 'toujours',
         owner: 'patron',
       },
+      beach: {
+        title: 'La Plage',
+        subtitle: 'ambiance après le service 🏖️',
+        btn: '🌊 TSUNAMI !',
+        btnWave: '🌊 ça arrive...',
+        btnSwim: '🏊 tout le monde nage !',
+        waterTitle: '🌊 TSUNAMI ! 🌊',
+        waterSub: "tout le monde à l'eau !",
+      },
       steps: [
         {
           icon: '👋',
@@ -600,6 +627,15 @@ export const translations: Record<Language, T> = {
         altDays: 'متناوب',
         always: 'دائماً',
         owner: 'صاحب',
+      },
+      beach: {
+        title: 'الشاطئ',
+        subtitle: 'أجواء ما بعد الوردية 🏖️',
+        btn: '🌊 تسونامي!',
+        btnWave: '🌊 قادمة...',
+        btnSwim: '🏊 الكل في الماء!',
+        waterTitle: '🌊 تسونامي! 🌊',
+        waterSub: 'الكل في البحر!',
       },
       steps: [
         {

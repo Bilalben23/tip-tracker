@@ -158,6 +158,8 @@ function BeachMemberChar({ m, phase }: { m: BMember; phase: BeachPhase }) {
 }
 
 function BeachScene() {
+  const { t } = useLang();
+  const b = t.guide.beach;
   const [phase, setPhase] = useState<BeachPhase>('idle');
 
   const triggerTsunami = () => {
@@ -170,9 +172,9 @@ function BeachScene() {
   const rows = [BEACH.slice(0, 3), BEACH.slice(3, 6), BEACH.slice(6, 9)];
 
   const btnLabel =
-    phase === 'wave' ? '🌊 incoming...' :
-    phase === 'swim' ? '🏊 tout le monde nage!' :
-    '🌊 TSUNAMI!';
+    phase === 'wave' ? b.btnWave :
+    phase === 'swim' ? b.btnSwim :
+    b.btn;
 
   return (
     <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
@@ -185,8 +187,8 @@ function BeachScene() {
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >🏖️</motion.span>
         <div>
-          <h3 className="text-white font-black text-base leading-tight">La Plage</h3>
-          <p className="text-slate-500 text-[10px]">after-shift beach vibes</p>
+          <h3 className="text-white font-black text-base leading-tight">{b.title}</h3>
+          <p className="text-slate-500 text-[10px]">{b.subtitle}</p>
         </div>
       </div>
 
@@ -283,8 +285,8 @@ function BeachScene() {
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 18 }}
                     >
-                      <p className="text-white font-black text-2xl drop-shadow-lg">🌊 TSUNAMI! 🌊</p>
-                      <p className="text-blue-200 text-xs mt-1 font-bold">tout le monde à l'eau!</p>
+                      <p className="text-white font-black text-2xl drop-shadow-lg">{b.waterTitle}</p>
+                      <p className="text-blue-200 text-xs mt-1 font-bold">{b.waterSub}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
