@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import type { Transition, Variants } from 'framer-motion';
+import { useState, useCallback } from 'react';
 import { useLang } from '../contexts/LanguageContext';
 
 interface Props { onBack: () => void }
@@ -16,11 +17,23 @@ function Character({
   animateY  = false,
   cookSway  = false,
   delay     = 0,
+  fart      = false,
 }: {
   emoji: string; name: string; sub?: string;
   nameColor?: string; subColor?: string;
   animateY?: boolean; cookSway?: boolean; delay?: number;
+  fart?: boolean;
 }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const triggerFart = useCallback(() => {
+    if (!fart) return;
+    const audio = new Audio('/sounds/beanfrog-proud-fart.mp3');
+    audio.play().catch(() => {});
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 2200);
+  }, [fart]);
+
   const emojiAnim = cookSway
     ? { rotate: [-12, 12, -12], scale: [1, 1.18, 1] }
     : animateY
@@ -32,8 +45,10 @@ function Character({
 
   return (
     <motion.div
-      className="flex items-center gap-2 cursor-pointer select-none"
+      className="relative flex items-center gap-2 cursor-pointer select-none"
       whileTap={{ scale: 1.3 }}
+      onClick={triggerFart}
+      onContextMenu={e => { e.preventDefault(); triggerFart(); }}
     >
       <motion.span
         className="text-xl leading-none inline-block"
@@ -46,6 +61,20 @@ function Character({
         <p className={`text-[11px] font-black leading-none ${nameColor}`}>{name}</p>
         {sub && <p className={`text-[9px] leading-tight mt-0.5 ${subColor}`}>{sub}</p>}
       </div>
+
+      <AnimatePresence>
+        {showTooltip && (
+          <motion.div
+            initial={{ opacity: 0, y: 4, scale: 0.85 }}
+            animate={{ opacity: 1, y: -2, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+            className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-700 text-white text-[11px] font-bold px-2 py-1 rounded-lg shadow-lg pointer-events-none z-50"
+          >
+            أنا الخراي 💨
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -129,7 +158,7 @@ function RestaurantFloor() {
                   nameColor="text-purple-300" subColor="text-purple-600"
                   cookSway delay={0} />
                 <Character emoji="👤" name="Yassin" animateY delay={0.4} />
-                <Character emoji="👤" name="Wael"   animateY delay={0.8} />
+                <Character emoji="👤" name="Wael"   animateY delay={0.8} fart />
               </div>
             </motion.div>
 
