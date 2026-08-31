@@ -47,7 +47,7 @@ export function LogDayPage({ initialDate }: Props) {
 
   const handleSave = () => {
     if (!user) return;
-    const newTips = parseFloat(tips) || 0;
+    const newTips = worked ? (parseFloat(tips) || 0) : 0;
     const prevBest = entriesLib.getAll(user.id)
       .filter(e => e.date !== date && e.worked)
       .reduce((m, e) => Math.max(m, e.tips), 0);
