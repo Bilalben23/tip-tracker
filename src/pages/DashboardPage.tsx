@@ -57,7 +57,8 @@ export function DashboardPage({ onNavigate }: Props) {
     ? ((totalTips - prevTips) / prevTips) * 100
     : null;
   const bonusAmount_ = monthBonus?.amount ?? 0;
-  const salary = user?.salary ?? 0;
+  const dailyRate = user?.salary ?? 0;
+  const salary = dailyRate * workedEntries.length;
   const totalEarnings = totalTips + bonusAmount_ + salary;
 
   const bestDay = workedEntries.reduce<typeof workedEntries[0] | null>(
