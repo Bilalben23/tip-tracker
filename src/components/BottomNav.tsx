@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, PlusCircle, CalendarDays, User, Divide } from 'lucide-react';
+import { Home, PlusCircle, CalendarDays, User, Divide, PieChart } from 'lucide-react';
 import type { Page } from '../types';
 import { useLang } from '../contexts/LanguageContext';
 
@@ -15,6 +15,7 @@ export function BottomNav({ current, onNavigate }: Props) {
     { page: 'dashboard', icon: <Home size={20} />,       label: t.nav.home },
     { page: 'log',       icon: <PlusCircle size={20} />, label: t.nav.log },
     { page: 'split',     icon: <Divide size={20} />,     label: t.nav.split },
+    { page: 'summary',   icon: <PieChart size={20} />,   label: t.nav.summary },
     { page: 'history',   icon: <CalendarDays size={20} />, label: t.nav.history },
     { page: 'profile',   icon: <User size={20} />,       label: t.nav.profile },
   ];

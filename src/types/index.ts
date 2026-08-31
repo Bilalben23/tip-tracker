@@ -27,5 +27,5 @@ export interface MonthlyBonus {
   createdAt: string;
 }
 
-export type Page = 'dashboard' | 'log' | 'history' | 'profile' | 'guide' | 'split';
+export type Page = 'dashboard' | 'log' | 'history' | 'profile' | 'guide' | 'split' | 'summary';
 export type Language = 'en' | 'fr' | 'ar';

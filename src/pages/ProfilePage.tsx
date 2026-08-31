@@ -277,7 +277,9 @@ export function ProfilePage({ onNavigate }: Props) {
               <ActionRow onCancel={() => setEditingSalary(false)} onSave={saveSalary} t={t} />
             </div>
           ) : (
-            <p className="text-blue-400 text-2xl font-black mt-1">{cur} {user.salary.toFixed(2)}</p>
+            <p className="text-blue-400 text-2xl font-black mt-1">
+              {cur} {user.salary.toFixed(2)} <span className="text-blue-400/60 text-sm font-bold">{t.summary.perDay}</span>
+            </p>
           )}
         </Setting>
 

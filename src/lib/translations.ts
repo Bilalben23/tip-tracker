@@ -8,7 +8,34 @@ export interface T {
   pwaUpdate: string;
   pwaUpdateBtn: string;
 
-  nav: { home: string; log: string; history: string; profile: string; split: string };
+  nav: { home: string; log: string; history: string; profile: string; split: string; summary: string };
+
+  summary: {
+    title: string;
+    subtitle: string;
+    thisMonth: string;
+    lastMonth: string;
+    allTime: string;
+    totalEarnings: string;
+    tipsCollected: string;
+    salaryCollected: string;
+    bonusCollected: string;
+    breakdown: string;
+    daysWorked: string;
+    daysOff: string;
+    workRate: string;
+    avgTips: string;
+    bestDay: string;
+    streak: string;
+    noRateHint: string;
+    setRate: string;
+    trend: string;
+    perDay: string;
+    noData: string;
+    logSomeDays: string;
+    shareSummary: string;
+    shareCopied: string;
+  };
 
   split: {
     title: string;
@@ -186,7 +213,34 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'New version available',
     pwaUpdateBtn: 'Update',
 
-    nav: { home: 'Home', log: 'Log Day', history: 'History', profile: 'Profile', split: 'Split' },
+    nav: { home: 'Home', log: 'Log Day', history: 'History', profile: 'Profile', split: 'Split', summary: 'Summary' },
+
+    summary: {
+      title: 'Summary',
+      subtitle: 'Your earnings, all in one place',
+      thisMonth: 'This month',
+      lastMonth: 'Last month',
+      allTime: 'All time',
+      totalEarnings: 'Total Earnings',
+      tipsCollected: 'Tips collected',
+      salaryCollected: 'Salary collected',
+      bonusCollected: 'Bonus collected',
+      breakdown: 'Breakdown',
+      daysWorked: 'Days worked',
+      daysOff: 'Days off',
+      workRate: 'Work rate',
+      avgTips: 'Avg tips/day',
+      bestDay: 'Best day',
+      streak: 'Current streak',
+      noRateHint: 'Set your daily rate in Profile to see salary collected.',
+      setRate: 'Set daily rate →',
+      trend: 'Last 6 months',
+      perDay: '/day',
+      noData: 'No days logged in this period yet',
+      logSomeDays: 'Log a day →',
+      shareSummary: 'Share summary',
+      shareCopied: 'Copied to clipboard!',
+    },
 
     split: {
       title: 'Tip Split',
@@ -213,7 +267,7 @@ export const translations: Record<Language, T> = {
       passwordPlaceholder: 'Min. 4 characters',
       confirmPassword: 'Confirm Password',
       confirmPasswordPlaceholder: 'Repeat password',
-      monthlySalary: 'Monthly Salary',
+      monthlySalary: 'Daily Rate',
       currency: 'Currency',
       createAccount: 'Create Account',
       errInvalid: 'Invalid username or password',
@@ -301,7 +355,7 @@ export const translations: Record<Language, T> = {
       totalTips: 'Total Tips',
       totalBonus: 'Total Bonus',
       daysWorked: 'Days Worked',
-      salaryLabel: 'Monthly Salary',
+      salaryLabel: 'Daily Rate',
       currencyLabel: 'Currency',
       changePassword: 'Change Password',
       currentPassword: 'Current password',
@@ -355,7 +409,7 @@ export const translations: Record<Language, T> = {
         {
           icon: '👋',
           title: 'Getting Started',
-          text: 'Create your account with a username, password, and your monthly salary. Each person on the team creates their own account on their own phone. Your data stays private on your device.',
+          text: 'Create your account with a username, password, and your daily rate (what you earn per day worked). Each person on the team creates their own account on their own phone. Your data stays private on your device.',
         },
         {
           icon: '💰',
@@ -389,7 +443,34 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'Nouvelle version disponible',
     pwaUpdateBtn: 'Mettre à jour',
 
-    nav: { home: 'Accueil', log: 'Saisir', history: 'Historique', profile: 'Profil', split: 'Partage' },
+    nav: { home: 'Accueil', log: 'Saisir', history: 'Historique', profile: 'Profil', split: 'Partage', summary: 'Résumé' },
+
+    summary: {
+      title: 'Résumé',
+      subtitle: 'Tous vos gains au même endroit',
+      thisMonth: 'Ce mois-ci',
+      lastMonth: 'Mois dernier',
+      allTime: 'Depuis toujours',
+      totalEarnings: 'Gains totaux',
+      tipsCollected: 'Pourboires collectés',
+      salaryCollected: 'Salaire collecté',
+      bonusCollected: 'Prime collectée',
+      breakdown: 'Répartition',
+      daysWorked: 'Jours travaillés',
+      daysOff: 'Jours de congé',
+      workRate: 'Taux de présence',
+      avgTips: 'Moy. pourboires/jour',
+      bestDay: 'Meilleur jour',
+      streak: 'Série en cours',
+      noRateHint: 'Définissez votre taux journalier dans le Profil pour voir le salaire collecté.',
+      setRate: 'Définir le taux journalier →',
+      trend: '6 derniers mois',
+      perDay: '/jour',
+      noData: 'Aucun jour enregistré pour cette période',
+      logSomeDays: 'Saisir un jour →',
+      shareSummary: 'Partager le résumé',
+      shareCopied: 'Copié dans le presse-papiers !',
+    },
 
     split: {
       title: 'Partage des pourboires',
@@ -416,7 +497,7 @@ export const translations: Record<Language, T> = {
       passwordPlaceholder: 'Min. 4 caractères',
       confirmPassword: 'Confirmer le mot de passe',
       confirmPasswordPlaceholder: 'Répéter le mot de passe',
-      monthlySalary: 'Salaire mensuel',
+      monthlySalary: 'Taux journalier',
       currency: 'Devise',
       createAccount: 'Créer un compte',
       errInvalid: 'Identifiant ou mot de passe incorrect',
@@ -504,7 +585,7 @@ export const translations: Record<Language, T> = {
       totalTips: 'Total pourboires',
       totalBonus: 'Total primes',
       daysWorked: 'Jours travaillés',
-      salaryLabel: 'Salaire mensuel',
+      salaryLabel: 'Taux journalier',
       currencyLabel: 'Devise',
       changePassword: 'Changer le mot de passe',
       currentPassword: 'Mot de passe actuel',
@@ -558,7 +639,7 @@ export const translations: Record<Language, T> = {
         {
           icon: '👋',
           title: 'Démarrage',
-          text: "Créez votre compte avec un pseudo, un mot de passe et votre salaire mensuel. Chaque membre de l'équipe crée son propre compte sur son téléphone. Vos données restent privées sur votre appareil.",
+          text: "Créez votre compte avec un pseudo, un mot de passe et votre taux journalier (ce que vous gagnez par jour travaillé). Chaque membre de l'équipe crée son propre compte sur son téléphone. Vos données restent privées sur votre appareil.",
         },
         {
           icon: '💰',
@@ -592,7 +673,34 @@ export const translations: Record<Language, T> = {
     pwaUpdate: 'إصدار جديد متاح',
     pwaUpdateBtn: 'تحديث',
 
-    nav: { home: 'الرئيسية', log: 'تسجيل', history: 'السجل', profile: 'الملف', split: 'قسمة' },
+    nav: { home: 'الرئيسية', log: 'تسجيل', history: 'السجل', profile: 'الملف', split: 'قسمة', summary: 'الملخص' },
+
+    summary: {
+      title: 'الملخص',
+      subtitle: 'كل أرباحك في مكان واحد',
+      thisMonth: 'هذا الشهر',
+      lastMonth: 'الشهر الماضي',
+      allTime: 'كل الوقت',
+      totalEarnings: 'إجمالي الأرباح',
+      tipsCollected: 'البقشيش المجموع',
+      salaryCollected: 'الراتب المحصّل',
+      bonusCollected: 'المكافأة المحصّلة',
+      breakdown: 'التفصيل',
+      daysWorked: 'أيام العمل',
+      daysOff: 'أيام الراحة',
+      workRate: 'معدل الحضور',
+      avgTips: 'متوسط البقشيش/يوم',
+      bestDay: 'أفضل يوم',
+      streak: 'السلسلة الحالية',
+      noRateHint: 'حدّد أجرك اليومي في الملف الشخصي لرؤية الراتب المحصّل.',
+      setRate: '← تحديد الأجر اليومي',
+      trend: 'آخر 6 أشهر',
+      perDay: '/ يوم',
+      noData: 'لا توجد أيام مسجلة لهذه الفترة بعد',
+      logSomeDays: '← سجّل يوماً',
+      shareSummary: 'مشاركة الملخص',
+      shareCopied: 'تم النسخ!',
+    },
 
     split: {
       title: 'قسمة البقشيش',
@@ -619,7 +727,7 @@ export const translations: Record<Language, T> = {
       passwordPlaceholder: '٤ أحرف على الأقل',
       confirmPassword: 'تأكيد كلمة المرور',
       confirmPasswordPlaceholder: 'أعد كتابة كلمة المرور',
-      monthlySalary: 'الراتب الشهري',
+      monthlySalary: 'الأجر اليومي',
       currency: 'العملة',
       createAccount: 'إنشاء الحساب',
       errInvalid: 'اسم المستخدم أو كلمة المرور غير صحيحة',
@@ -707,7 +815,7 @@ export const translations: Record<Language, T> = {
       totalTips: 'إجمالي البقشيش',
       totalBonus: 'إجمالي المكافآت',
       daysWorked: 'أيام العمل',
-      salaryLabel: 'الراتب الشهري',
+      salaryLabel: 'الأجر اليومي',
       currencyLabel: 'العملة',
       changePassword: 'تغيير كلمة المرور',
       currentPassword: 'كلمة المرور الحالية',
@@ -761,7 +869,7 @@ export const translations: Record<Language, T> = {
         {
           icon: '👋',
           title: 'البدء',
-          text: 'أنشئ حسابك باسم مستخدم وكلمة مرور وراتبك الشهري. كل عضو في الفريق يُنشئ حسابه الخاص على هاتفه. بياناتك خاصة ومحفوظة على جهازك فقط.',
+          text: 'أنشئ حسابك باسم مستخدم وكلمة مرور وأجرك اليومي (ما تكسبه في كل يوم عمل). كل عضو في الفريق يُنشئ حسابه الخاص على هاتفه. بياناتك خاصة ومحفوظة على جهازك فقط.',
         },
         {
           icon: '💰',
